@@ -85,7 +85,7 @@
 			<span class="scn nd-meta">/01</span>
 			<MoonScroll
 				text="霓虹都市"
-				label="Neon City — inscription over an LED moon"
+				label="Neon City: inscription over an LED moon"
 				caption="NI HONG DU SHI"
 				size="clamp(16rem, 30vw, 27rem)"
 			/>
