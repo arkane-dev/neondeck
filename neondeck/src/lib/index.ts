@@ -16,6 +16,7 @@ export { default as HanziMark } from './components/HanziMark.svelte';
 export { default as NeonSign } from './components/NeonSign.svelte';
 export { default as DotMatrix } from './components/DotMatrix.svelte';
 export { default as Seal } from './components/Seal.svelte';
+export { default as MoonScroll } from './components/MoonScroll.svelte';
 export { default as SysClock } from './components/SysClock.svelte';
 export * from './tokens.js';
 export type { Accent, Tone } from './types.js';

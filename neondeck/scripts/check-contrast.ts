@@ -55,6 +55,16 @@ for (const [n, c] of Object.entries(neon)) {
 	add('china', `NeonSign ${n} glyph`, mix(c, '#ffffff', 0.35), mix(c, C.void, 0.07), 4.5);
 	add('china', `NeonSign ${n} caption`, c, C.void, 4.5);
 }
+// MoonScroll: the inscription carries a solid --nd-void outline (≥1.2% of moon ≈ 3px at the smallest size),
+// so WCAG measures glyph vs outline (Understanding 1.4.3: text halos/outlines count as the background).
+// Moon tones are limited to the darker neons, so the fill also stays readable against bright dots (≥2.4:1).
+const moonTones = { magenta: C.magenta, violet: C.violet, red: C.red, blue: C.blue };
+for (const [n, c] of Object.entries(moonTones)) {
+	const glyph = mix(c, '#ffffff', 0.12);
+	add('china', `MoonScroll ${n}: inscription vs its outline (large)`, glyph, C.void, 3);
+	add('china', `MoonScroll ${n}: fill vs brightest dot (legibility floor)`, glyph, c, 2.4);
+}
+add('china', 'MoonScroll pinyin (accent-2) on void strip', C.cyan, C.void, 4.5);
 add('china', 'Seal: paper glyphs on cinnabar', C.paper, C.cinnabar, 4.5);
 add('china', 'Seal relief: cinnabar on paper', C.cinnabar, C.paper, 4.5);
 add('china', 'Seal block vs bg (non-text edge)', C.cinnabar, C.bg, 3);

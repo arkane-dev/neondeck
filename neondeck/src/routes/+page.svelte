@@ -2,7 +2,7 @@
 <script lang="ts">
 	import {
 		AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input,
-		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, color
+		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, color
 	} from '../lib/index.js';
 
 	let handle = $state('');
@@ -83,11 +83,14 @@
 		</div>
 		<div class="hero-visual nd-brackets nd-fog">
 			<span class="scn nd-meta">/01</span>
-			<div class="signs">
-				<NeonSign text="不夜城" label="City that never sleeps" caption="BU YE CHENG" tone="magenta" size="clamp(3rem, 5.5vw, 5rem)" />
-				<NeonSign text="霓虹" label="Neon" caption="NI HONG" tone="cyan" size="clamp(2.2rem, 4vw, 3.6rem)" />
-				<NeonSign text="山城" label="Mountain City (Chongqing)" caption="SHAN CHENG" tone="gold" size="clamp(2.2rem, 4vw, 3.6rem)" flicker />
-			</div>
+			<MoonScroll
+				text="霓虹都市"
+				label="Neon City — inscription over an LED moon, sealed Neon Deck"
+				caption="NI HONG DU SHI"
+				seal="霓虹甲板"
+				sealLabel="Neon Deck seal"
+				size="clamp(16rem, 30vw, 27rem)"
+			/>
 			<div class="coords nd-mono">
 				<span>N_29.5630</span><span>E_106.5516</span><span>ALT_244M</span>
 			</div>
@@ -257,9 +260,6 @@
 	.lede { color: var(--nd-text-dim); max-width: 46ch; }
 	.row { display: flex; flex-wrap: wrap; gap: var(--nd-space-4); align-items: center; }
 	.hero-visual { --nd-bracket-color: var(--nd-accent); position: relative; display: grid; place-items: center; margin: var(--nd-space-8); overflow: hidden; }
-	.signs { position: relative; display: flex; align-items: flex-start; gap: clamp(1rem, 3vw, 2.5rem); }
-	.signs > :global(:nth-child(2)) { margin-top: 4rem; }
-	.signs > :global(:nth-child(3)) { margin-top: 1.5rem; }
 	.scn { position: absolute; top: var(--nd-space-4); left: var(--nd-space-4); color: var(--nd-accent); }
 	.scn2 { position: absolute; bottom: var(--nd-space-4); right: var(--nd-space-4); }
 	.coords {
@@ -269,7 +269,7 @@
 		display: grid;
 		padding: var(--nd-space-2) var(--nd-space-3);
 		border: 1px solid var(--nd-accent-2);
-		background: color-mix(in srgb, var(--nd-accent-2) 12%, var(--nd-bg)); /* opaque: it can overlap the signs */
+		background: color-mix(in srgb, var(--nd-accent-2) 12%, var(--nd-bg)); /* opaque: it can overlap the moon */
 		color: var(--nd-accent-2);
 		font-size: var(--nd-text-xs);
 	}
@@ -309,7 +309,8 @@
 
 	@media (max-width: 960px) {
 		.hero { grid-template-columns: 1fr; }
-		.hero-visual { min-height: 30rem; }
+		.hero-visual { min-height: 34rem; }
+		.hero-visual :global(.nd-moonscroll) { --moon: min(17rem, 72vw) !important; }
 		.coords { top: auto; right: auto; bottom: var(--nd-space-4); left: var(--nd-space-4); }
 		.dash { grid-template-columns: 1fr; }
 		.dash :global(.span-2) { grid-column: auto; }

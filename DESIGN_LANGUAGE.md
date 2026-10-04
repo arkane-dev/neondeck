@@ -93,11 +93,12 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 
 ## 5. Shape, line, light
 
-- **Radius is 0.** Corners are **cut (chamfered)**: `--nd-cut-xs/sm/md/lg` = 4/8/14/22px. Panels cut top-left + bottom-right. Buttons cut top-right only. Inputs cut bottom-right. No circles, except LED dots inside `DotMatrix`. Status dots are square.
+- **Radius is 0.** Corners are **cut (chamfered)**: `--nd-cut-xs/sm/md/lg` = 4/8/14/22px. Panels cut top-left + bottom-right. Buttons cut top-right only. Inputs cut bottom-right. No circles, except LED dots (`DotMatrix`, the `MoonScroll` moon) and the `MoonScroll` moon-gate ring. Status dots are square.
 - **1px lines everywhere.** Frames are 1px. Grids are 1px. Dividers are 1px. Never use a 2px+ border except the active-nav underline and the code-block left rule.
 - **Borders come from a wrapper** (frame div with border-color background, inner div clipped 1px smaller), because `clip-path` eats CSS borders. `Panel`, `Button` and `Input` already do this. Copy the pattern for new framed things.
 - **Glow = light source.** A two-layer shadow (4px core + 16px halo). **One glowing element per view region**: the primary CTA, the active nav item, one hero word, or **one sign cluster** (a group of `NeonSign`s reads as one lit street, so it counts once). Glowing panels are rare (one per screen at most). Glow scales with `--nd-glow-size` and is turned off under `prefers-contrast: more`.
 - **HUD furniture** (decorative, `aria-hidden`): corner brackets `.nd-brackets`, tick `Ruler`, `Barcode` stamps, coordinate boxes, binary strings, `//SCN_01` tags. Use them at edges and in empty space. Never put them inside dense content.
+- **MoonScroll** (hero only, one per page): moon tones are limited to magenta, violet, red and blue, because white glyphs vanish on cyan, yellow, jade or gold. The inscription has a solid `--nd-void` outline (≥3px) with paint-order stroke. That outline is what makes it pass contrast, so never remove it.
 - **Signage** (from `images/china`):
   - `NeonSign` is a vertical signboard: a 2px tube frame (the one allowed 2px border), white-hot glyphs with a colored halo, one character per cell, and a spaced pinyin caption under it. Group 2–4 signs in **different tones** and at **staggered heights**, like a street. Pick real words: 不夜城 (city that never sleeps), 霓虹 (neon), 山城 (mountain city), 重庆, 火锅, 你好.
   - `DotMatrix` renders text as LEDs for façades, drone-show moments and big brand marks. Use ≥16 rows for hanzi, and place it on `.nd-led-bg`.
@@ -122,7 +123,7 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 - Under 720px: rail and clock hide, nav wraps to a scrolling second row.
 
 ### Page anatomy (websites)
-1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual on `.nd-grid-bg` + `.nd-fog` inside corner brackets, with an index tag `/01`, a coordinate box (real coordinates, e.g. Chongqing `N_29.5630 E_106.5516`) and `//CKG_01`. The centerpiece is a **cluster of 2–4 NeonSigns** at staggered heights (or an image, LED text, or 3D wireframe).
+1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual on `.nd-grid-bg` + `.nd-fog` inside corner brackets, with an index tag `/01`, a coordinate box (real coordinates, e.g. Chongqing `N_29.5630 E_106.5516`) and `//CKG_01`. The centerpiece is **one `MoonScroll`**: a neon hanging scroll (立轴). It has an LED dot-matrix moon lit from the upper left, a thin moon-gate ring (月洞门), and one monumental vertical inscription (2–4 hanzi) that runs taller than the moon. Pinyin runs vertically beside it on a dark strip, and a cinnabar seal sits at the foot of the column. It is singular and imposing: one light source, not a cluster. A sign cluster is the fallback for secondary heroes.
 2. **Numbered, bilingual sections:** every section opens with `SectionHeader` and a `zh` title (`/02 核心原则 CORE PRINCIPLES ───── meta`). Number them in page order. Chinese comes first, as on the street signs.
 3. **Feature rows:** equal columns split by 1px vertical hairlines, inside top/bottom hairlines. Each has an index, a cyan uppercase title and dim short copy. No cards here.
 4. **Work/content grids:** Panels in a 12-col grid (3 or 4 across). Image on top, label row underneath with a ↗ arrow.
@@ -151,7 +152,7 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - **1.4.11 Non-text Contrast:** component boundaries (input edges, button edges), focus rings and meaningful graphics (meter segments) need 3:1 against what is next to them.
 
 **How it's enforced**
-- `npm run contrast` (in `neondeck/`) checks 98 token pairs and exits 1 on any failure. Run it after touching a color.
+- `npm run contrast` (in `neondeck/`) checks 107 token pairs and exits 1 on any failure. Run it after touching a color.
 - axe-core on the rendered showcase shows 0 violations at 1440px and 400px. 2026-10-04: 1 real bug found and fixed (button captions).
 
 **Measured on `--nd-bg`**
@@ -175,6 +176,7 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - **Anything with text that overlaps art needs an opaque background.** Example: the coordinate box over the sun.
 - **Text over a neon disc is large and white**, and the disc stays ≤80% opacity with a magenta (not pink) core, giving ≥4:1. Small text never sits on a neon disc.
 - **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun-red is for `HanziMark tone="sun"` and titles ≥24px only. Cinnabar (#b81f1a) is darker, so it passes as small text on paper (5.1:1) and carries cream glyphs at 5.1:1.
+- **MoonScroll:** the inscription is judged against its own dark outline (17:1). WCAG's Understanding notes for 1.4.3 accept a text outline or halo as the background. The fill alone is only 2.7–3.3:1 against the brightest dots, which is why the outline is mandatory and light moon tones aren't allowed.
 - **China layer:** sign glyphs are 12–17:1 and pinyin captions are ≥5.4:1. Cinnabar on the dark UI is only 3.1:1, so **relief seals always bring their own paper backing** (axe caught this). Fog is capped at 22% teal / 28% rose so `text-mute` stays ≥4.7:1 over it.
 - **Focus:** a 2px cyan outline, offset 2–3px. The offset means it is judged against the page background (14:1), not the button. Paper mode switches focus to ink. Never remove it.
 - **Translucent top bar** (88% bg): worst case is 4.9:1 when it scrolls over paper or yellow. Don't lower that opacity.
@@ -199,6 +201,6 @@ npm i ../sharable_assets/neondeck        # or file: dep / workspace
   import { AppShell, Panel, Button } from 'neondeck';
 </script>
 ```
-Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, SysClock`. `SectionHeader` takes `zh` for a bilingual title. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
+Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, SysClock`. `SectionHeader` takes `zh` for a bilingual title. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
 
 New components must use only `--nd-*` tokens and follow §5. Then add them to the showcase page (`neondeck/src/routes/+page.svelte`).
