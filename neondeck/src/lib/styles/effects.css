@@ -123,6 +123,7 @@
 	--nd-line-strong: #8b8269;
 	--nd-accent: var(--nd-ink);
 	--nd-text-on-neon: var(--nd-paper);
+	--nd-bg: var(--nd-paper); /* "page background" here is paper: outline buttons draw ink on cream, not ink on navy */
 	--nd-focus: var(--nd-ink);
 	--nd-glow-size: 0;
 	background-color: var(--nd-paper);

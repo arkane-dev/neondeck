@@ -77,6 +77,7 @@ add('paper', 'ink on paper', P.text, C.paper, 4.5);
 add('paper', 'text-dim on paper', P.textDim, C.paper, 4.5);
 add('paper', 'text-mute on paper', P.textMute, C.paper, 4.5);
 add('paper', 'button: paper on ink fill', P.textOnAccent, P.accent, 4.5);
+add('paper', 'outline button: ink on paper face', P.accent, C.paper, 4.5);
 add('paper', 'input edge (line-strong) vs paper', P.lineStrong, C.paper, 3);
 add('paper', 'sun on paper — LARGE text/graphics only', C.sun, C.paper, 3);
 
