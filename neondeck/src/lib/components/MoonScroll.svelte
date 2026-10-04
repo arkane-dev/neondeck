@@ -18,6 +18,7 @@
 		face?: 'gothic' | 'tech';
 		size?: string; // moon diameter
 		ring?: boolean; // moon-gate ring
+		offset?: number; // horizontal shift of the inscription column, as a fraction of the moon (negative = left)
 	}
 	let {
 		text,
@@ -28,8 +29,13 @@
 		tone = 'magenta',
 		face = 'tech',
 		size = 'min(26rem, 70vw)',
-		ring = true
+		ring = true,
+		offset
 	}: Props = $props();
+
+	// Without a seal the column re-centers. Default to the off-center position the seal used to
+	// create (half the seal's width + gap ≈ 0.125 moon), so the inscription sits left of center.
+	const shift = $derived(offset ?? (seal ? 0 : -0.125));
 
 	// LED moon: an N×N grid of dots clipped to a circle. Dot size and brightness fall off
 	// from a core offset up-left (moonlight), so it reads as a lit sphere, not a flat flag disc.
@@ -57,7 +63,7 @@
 				<circle cx={d.x} cy={d.y} r={d.r} opacity={d.o} />
 			{/each}
 		</svg>
-		<div class="column">
+		<div class="column" style:--shift={shift}>
 			{#if caption}<span class="pinyin">{caption}</span>{/if}
 			<span class="inscription" lang="zh-Hans">
 				{#each chars as ch, i (i)}<span>{ch}</span>{/each}
@@ -99,6 +105,7 @@
 	}
 	.column {
 		position: relative;
+		translate: calc(var(--moon) * var(--shift, 0)) 0;
 		display: flex;
 		align-items: flex-start;
 		gap: calc(var(--moon) * 0.04);
