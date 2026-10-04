@@ -39,10 +39,10 @@ Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark
 | `--nd-surface-2` | #12163a | hover, nested |
 | `--nd-surface-3` | #1b1f4a | menus, popovers, selected |
 | `--nd-line` | #262a5c | hairlines, grid, row dividers |
-| `--nd-line-strong` | #43479a | panel frames |
+| `--nd-line-strong` | #5659a4 | panel frames, input edges (≥3:1, WCAG 1.4.11) |
 | `--nd-text` | #ecebff | copy (cool white, never #fff) |
 | `--nd-text-dim` | #a49fd9 | labels, secondary copy |
-| `--nd-text-mute` | #6c68a8 | meta, placeholder, disabled |
+| `--nd-text-mute` | #8885b9 | meta, hints, table headers (≥4.5:1 on every surface) |
 
 Never use pure black or neutral grey. Every dark is tinted blue/violet.
 
@@ -53,7 +53,7 @@ Never use pure black or neutral grey. Every dark is tinted blue/violet.
 | `--nd-cyan` | #22f2f7 | **accent-2**: links, success/online, focus ring, coords |
 | `--nd-yellow` | #f5ec58 | warning, hazard tape, data highlight |
 | `--nd-red` | #ff3b52 | danger, breach, destructive |
-| `--nd-blue` | #3f5bff | info |
+| `--nd-blue` | #6077ff | info |
 | `--nd-violet` | #a66bff | ambient haze, chart series |
 | `--nd-pink` | #ff5fb4 | secondary neon, gradients |
 
@@ -123,18 +123,46 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 4px grid (`--nd-space-*`). Inside panels: 16–20px padding, 8–16px between controls. Between page sections: 96px. Data UIs are dense. Marketing pages are airy, but the grid always shows.
 
 ## 7. Editorial / poster mode (`.nd-paper`)
-For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one** red sun disc bleeding off an edge. Vertical kanji sits in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
+For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one** red sun disc bleeding off an edge. Inside paper the accent is **ink** (buttons are ink-black with cream text), because sun-red fails small-text contrast (§9). Vertical kanji sits in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
 
 ## 8. Motion
 Fast and mechanical: 80/140/220/420ms, ease `cubic-bezier(.2,.8,.2,1)` or `steps()`. Nothing bounces or springs. Allowed effects: glitch RGB-split on hover (headlines/logos), blinking `_` cursor, square status-dot pulse, neon flicker (**one** element per page, max), segmented meters filling. `prefers-reduced-motion` kills all of it.
 
 ## 9. Accessibility (not optional)
-- Measured contrast on `--nd-bg`: text 16.9:1, text-dim 8.1:1, cyan 14.3:1, magenta 6.2:1, text-mute 4.0:1. `text-mute` is only for meta (≥ AA-large), never for essential content. Dark text on a magenta fill is 6.2:1 and on red 5.7:1.
-- Paper: ink 14.8:1. `sun` red on paper is 3.5:1, so it is fine for big kanji and titles but never for body text.
-- Neon text is fine for short labels. Long copy is always `--nd-text`.
-- Focus: a 2px cyan outline, offset 2–3px, on everything. Never remove it.
+The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthouse and WAVE run:
+- **1.4.3 Contrast (Minimum):** text needs 4.5:1, or 3:1 if large (≥24px, or ≥18.66px bold). AAA (1.4.6) is 7:1.
+- **1.4.11 Non-text Contrast:** component boundaries (input edges, button edges), focus rings and meaningful graphics (meter segments) need 3:1 against what is next to them.
+
+**How it's enforced**
+- `npm run contrast` (in `neondeck/`) checks 64 token pairs and exits 1 on any failure. Run it after touching a color.
+- axe-core on the rendered showcase shows 0 violations at 1440px and 400px. 2026-10-04: 1 real bug found and fixed (button captions).
+
+**Measured on `--nd-bg`**
+| Color | Ratio |
+|---|---|
+| text | 16.9:1 |
+| text-dim | 8.1:1 |
+| text-mute | 5.8:1 (worst: 4.55:1 on surface-3) |
+| cyan | 14.3:1 |
+| yellow | 16.1:1 |
+| magenta | 6.2:1 |
+| red | 5.7:1 |
+| violet | 5.8:1 |
+| blue | 5.3:1 |
+| dark text on neon fills | 5.3–16.1:1 |
+| panel/input edge | 3.0–3.3:1 |
+
+**Rules that keep it passing**
+- **Never use `opacity` or alpha to dim text.** It silently cuts contrast; that was exactly the button-caption bug. Use `--nd-text-dim` or `--nd-text-mute` instead.
+- **Tints behind text are ≤14% neon.** A Tag's tone color on its own 10% tint passes for every neon.
+- **Anything with text that overlaps art needs an opaque background.** Example: the coordinate box over the sun.
+- **Text over a neon disc is large and white**, and the disc stays ≤80% opacity with a magenta (not pink) core, giving ≥4:1. Small text never sits on a neon disc.
+- **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun is for the disc, `KanjiMark tone="sun"` and titles ≥24px only. Keep body copy from running over the sun; on narrow screens shrink and move the disc.
+- **Focus:** a 2px cyan outline, offset 2–3px. The offset means it is judged against the page background (14:1), not the button. Paper mode switches focus to ink. Never remove it.
+- **Translucent top bar** (88% bg): worst case is 4.9:1 when it scrolls over paper or yellow. Don't lower that opacity.
 - Decorative HUD (barcodes, rulers, kanji, coords) gets `aria-hidden` or an English `aria-label`.
 - Color is never the only signal. Tags carry words (`DOWN`, not just red).
+- `prefers-contrast: more` turns off glow and brightens lines and secondary text.
 
 ## 10. Do / Don't
 **Do:** cut corners · show the grid · number sections · put numbers in mono · use one glow per zone · add `_` cursors and `>` prompts · use hairlines over boxes · use dark blue-black over black.

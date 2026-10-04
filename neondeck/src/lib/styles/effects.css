@@ -92,13 +92,19 @@
 	z-index: var(--nd-z-fx);
 }
 
-/* Paper surface: poster editorial blocks. Ink on cream with a red sun. */
+/* Paper surface: poster editorial blocks. Ink on cream with a red sun.
+ * Accent becomes ink (not sun): sun-red fails 4.5:1 for small text and for dark text on a sun fill.
+ * Keep sun for decoration only: the disc, KanjiMark tone="sun", titles ≥24px. */
 .nd-paper {
 	--nd-text: var(--nd-ink);
 	--nd-text-dim: #3a3632;
-	--nd-text-mute: #6d6658;
+	--nd-text-mute: #696255;
 	--nd-line: #b9ae8c;
-	--nd-accent: var(--nd-sun);
+	--nd-line-strong: #8b8269;
+	--nd-accent: var(--nd-ink);
+	--nd-text-on-neon: var(--nd-paper);
+	--nd-focus: var(--nd-ink);
+	--nd-glow-size: 0;
 	background-color: var(--nd-paper);
 	color: var(--nd-ink);
 	background-image: radial-gradient(#0000000d 1px, transparent 1px);

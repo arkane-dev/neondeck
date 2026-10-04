@@ -13,19 +13,19 @@
 	--nd-surface-2: #12163a; /* raised: hover, inputs, nested panels */
 	--nd-surface-3: #1b1f4a; /* highest: menus, popovers, selected rows */
 	--nd-line: #262a5c; /* hairlines, grid, dim borders */
-	--nd-line-strong: #43479a; /* default panel border */
+	--nd-line-strong: #5659a4; /* default panel/input border (≥3:1 vs surfaces, WCAG 1.4.11) */
 
 	/* ── Text ── */
 	--nd-text: #ecebff; /* primary copy (cool white, never #fff) */
 	--nd-text-dim: #a49fd9; /* secondary copy, labels (lavender skin-tone) */
-	--nd-text-mute: #6c68a8; /* meta, disabled, placeholder */
+	--nd-text-mute: #8885b9; /* meta, hints, table headers (≥4.5:1 on every surface) */
 	--nd-text-on-neon: #070818; /* text on filled neon surfaces */
 
 	/* ── Neon: the light sources. Used sparingly, at full strength. ── */
 	--nd-magenta: #ff2bd6;
 	--nd-pink: #ff5fb4;
 	--nd-cyan: #22f2f7;
-	--nd-blue: #3f5bff;
+	--nd-blue: #6077ff;
 	--nd-violet: #a66bff;
 	--nd-yellow: #f5ec58;
 	--nd-red: #ff3b52;
@@ -166,5 +166,5 @@
 	:root { --nd-dur-fast: 0ms; --nd-dur-base: 0ms; --nd-dur-slow: 0ms; }
 }
 @media (prefers-contrast: more) {
-	:root { --nd-glow-size: 0; --nd-line: #4a4f9c; --nd-text-dim: #c9c5f2; --nd-text-mute: #9a96d0; }
+	:root { --nd-glow-size: 0; --nd-line: #4a4f9c; --nd-line-strong: #7a7dc8; --nd-text-dim: #c9c5f2; --nd-text-mute: #aaa6dc; }
 }

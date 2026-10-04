@@ -225,9 +225,10 @@
 		width: min(60%, 22rem);
 		aspect-ratio: 1;
 		border-radius: 50%; /* the ONE allowed circle: the poster sun */
-		background: radial-gradient(circle at 40% 35%, var(--nd-pink), var(--nd-magenta) 55%, #8a0f78);
+		/* magenta core at 0.8 opacity keeps white kanji over it ≥4:1 (a pink core drops it to ~3.1) */
+		background: radial-gradient(circle at 40% 35%, var(--nd-magenta) 30%, #8a0f78);
 		box-shadow: 0 0 80px color-mix(in srgb, var(--nd-magenta) 45%, transparent);
-		opacity: 0.85;
+		opacity: 0.8;
 	}
 	.hero-visual :global(.nd-kanji) { position: relative; color: var(--nd-text); text-shadow: 0 0 24px var(--nd-bg); }
 	.scn { position: absolute; top: var(--nd-space-4); left: var(--nd-space-4); color: var(--nd-accent); }
@@ -239,7 +240,7 @@
 		display: grid;
 		padding: var(--nd-space-2) var(--nd-space-3);
 		border: 1px solid var(--nd-accent-2);
-		background: var(--nd-accent-2-tint);
+		background: color-mix(in srgb, var(--nd-accent-2) 12%, var(--nd-bg)); /* opaque: it overlaps the sun */
 		color: var(--nd-accent-2);
 		font-size: var(--nd-text-xs);
 	}
@@ -269,6 +270,7 @@
 	.poster-side { display: grid; place-items: center; padding: var(--nd-space-6); background: var(--nd-ink); }
 	.poster-main { position: relative; padding: var(--nd-space-12) var(--nd-space-10); }
 	.poster-main > :not(.poster-sun) { position: relative; }
+	.poster-main > p { max-width: 42ch; }
 	.poster-sun { position: absolute; right: -4rem; top: -3rem; width: 20rem; aspect-ratio: 1; border-radius: 50%; background: var(--nd-sun); opacity: 0.92; }
 	.poster-title { font-size: var(--nd-text-hero); font-family: var(--nd-font-display); color: var(--nd-ink); margin: var(--nd-space-2) 0 var(--nd-space-4); }
 
@@ -277,5 +279,12 @@
 		.hero-visual { min-height: 18rem; }
 		.dash { grid-template-columns: 1fr; }
 		.dash :global(.span-2) { grid-column: auto; }
+		/* keep copy off the sun: ink on sun-red is only 4.2:1 */
+		.poster { grid-template-columns: 1fr; }
+		.poster-side { padding: var(--nd-space-4); }
+		.poster-side :global(.nd-kanji) { writing-mode: horizontal-tb; }
+		.poster-main { padding: var(--nd-space-16) var(--nd-space-5) var(--nd-space-8); }
+		.poster-sun { width: 9rem; right: -2.5rem; top: -2.5rem; }
+		.poster-title { font-size: var(--nd-text-4xl); }
 	}
 </style>

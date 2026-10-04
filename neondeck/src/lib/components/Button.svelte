@@ -98,10 +98,10 @@
 	.sub {
 		margin-top: 0.2em;
 		font-family: var(--nd-font-mono);
-		font-size: 0.6rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		opacity: 0.7;
+		font-size: var(--nd-text-2xs);
+		font-weight: 400;
+		letter-spacing: 0.04em;
+		text-transform: uppercase; /* no opacity: fading it drops contrast below 4.5:1 */
 	}
 	.arrow { font-family: var(--nd-font-mono); }
 	.icon { display: inline-flex; width: 1.1em; height: 1.1em; }

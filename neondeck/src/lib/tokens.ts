@@ -10,15 +10,15 @@ export const color = {
 	surface2: '#12163a',
 	surface3: '#1b1f4a',
 	line: '#262a5c',
-	lineStrong: '#43479a',
+	lineStrong: '#5659a4',
 	text: '#ecebff',
 	textDim: '#a49fd9',
-	textMute: '#6c68a8',
+	textMute: '#8885b9',
 	textOnNeon: '#070818',
 	magenta: '#ff2bd6',
 	pink: '#ff5fb4',
 	cyan: '#22f2f7',
-	blue: '#3f5bff',
+	blue: '#6077ff',
 	violet: '#a66bff',
 	yellow: '#f5ec58',
 	red: '#ff3b52',
@@ -40,6 +40,17 @@ export const semantic = {
 	warning: color.yellow,
 	danger: color.red,
 	focus: color.cyan
+} as const;
+
+/** Overrides inside .nd-paper (editorial poster blocks). */
+export const paperMode = {
+	text: color.ink,
+	textDim: '#3a3632',
+	textMute: '#696255',
+	line: '#b9ae8c',
+	lineStrong: '#8b8269',
+	accent: color.ink,
+	textOnAccent: color.paper
 } as const;
 
 /** Categorical chart series, in order. */
