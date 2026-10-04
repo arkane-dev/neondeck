@@ -33,7 +33,7 @@
 		letter-spacing: 0.08em;
 		line-height: 1.5;
 		text-transform: uppercase;
-		white-space: nowrap;
+		max-width: 100%; /* short labels stay on one line; long ones wrap instead of widening the page */
 	}
 	.solid { background: var(--t); color: var(--nd-text-on-neon); }
 	.tone-accent-2 { --t: var(--nd-accent-2); }
