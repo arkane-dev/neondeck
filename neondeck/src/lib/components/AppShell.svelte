@@ -17,6 +17,7 @@
 	}
 	interface Props {
 		brand: string; // "CYBR_"
+		home?: string; // brand link target; "#/" for hash-routed (Wails) apps
 		nav?: NavItem[];
 		railCaption?: string; // rotated text in the rail
 		clock?: boolean;
@@ -29,6 +30,7 @@
 	}
 	let {
 		brand,
+		home = '/',
 		nav = [],
 		railCaption,
 		clock = true,
@@ -43,7 +45,7 @@
 
 <div class="nd-shell" class:has-sidebar={!!sidebar} class:nd-scanlines={scanlines}>
 	<header class="topbar">
-		<a class="brand" href="/">
+		<a class="brand" href={home}>
 			<span class="mark">{#if logo}{@render logo()}{:else}◢◤{/if}</span>
 			<span class="name">{brand}</span>
 		</a>
