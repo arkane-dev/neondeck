@@ -22,8 +22,9 @@
 <style>
 	.nd-section-header {
 		display: flex;
+		flex-wrap: wrap; /* narrow phones: meta drops to its own line instead of widening the page */
 		align-items: center;
-		gap: var(--nd-space-4);
+		gap: var(--nd-space-2) var(--nd-space-4);
 		margin-bottom: var(--nd-space-6);
 	}
 	.idx { font-family: var(--nd-font-mono); font-size: var(--nd-text-sm); color: var(--nd-accent); }
@@ -42,9 +43,9 @@
 		color: var(--nd-text);
 	}
 	.rule {
-		flex: 1;
+		flex: 1 1 2rem;
 		height: 1px;
 		background: linear-gradient(90deg, var(--nd-line-strong), var(--nd-line) 60%, transparent);
 	}
-	.meta { font-family: var(--nd-font-mono); font-size: var(--nd-text-xs); color: var(--nd-text-mute); }
+	.meta { font-family: var(--nd-font-mono); font-size: var(--nd-text-xs); color: var(--nd-text-mute); overflow-wrap: anywhere; }
 </style>
