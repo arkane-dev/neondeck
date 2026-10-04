@@ -94,7 +94,7 @@
 
 /* Paper surface: poster editorial blocks. Ink on cream with a red sun.
  * Accent becomes ink (not sun): sun-red fails 4.5:1 for small text and for dark text on a sun fill.
- * Keep sun for decoration only: the disc, KanjiMark tone="sun", titles ≥24px. */
+ * Keep sun for decoration only: the disc, HanziMark tone="sun", titles ≥24px. */
 .nd-paper {
 	--nd-text: var(--nd-ink);
 	--nd-text-dim: #3a3632;

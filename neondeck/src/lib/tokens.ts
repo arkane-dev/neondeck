@@ -69,7 +69,8 @@ export const font = {
 	display: "'Chakra Petch', 'Rajdhani', system-ui, sans-serif",
 	ui: "'Rajdhani', 'Chakra Petch', system-ui, sans-serif",
 	mono: "'JetBrains Mono', ui-monospace, Menlo, monospace",
-	cjk: "'Noto Sans JP', sans-serif"
+	cjk: "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+	cjkTech: "'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif"
 } as const;
 
 /** Wails: options.App{ BackgroundColour: &options.RGBA{R: 7, G: 8, B: 24, A: 255} } */

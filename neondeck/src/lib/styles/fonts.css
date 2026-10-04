@@ -8,5 +8,6 @@
 @import '@fontsource/rajdhani/700.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/600.css';
-/* Noto Sans JP is split by unicode-range, so only glyphs actually used get downloaded. */
-@import '@fontsource/noto-sans-jp/900.css';
+/* Chinese fonts are split by unicode-range, so only glyphs actually used get downloaded. */
+@import '@fontsource/noto-sans-sc/900.css';
+@import '@fontsource/zcool-qingke-huangyou/400.css';

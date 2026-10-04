@@ -76,7 +76,8 @@
 	--nd-font-display: 'Chakra Petch', 'Rajdhani', system-ui, sans-serif; /* headings, body */
 	--nd-font-ui: 'Rajdhani', 'Chakra Petch', system-ui, sans-serif; /* labels, buttons, nav */
 	--nd-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; /* data, meta */
-	--nd-font-cjk: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; /* decorative kanji */
+	--nd-font-cjk: 'Noto Sans SC', 'PingFang SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif; /* decorative hanzi (Simplified Chinese) */
+	--nd-font-cjk-tech: 'ZCOOL QingKe HuangYou', var(--nd-font-cjk); /* squared display hanzi; falls back to Noto for missing glyphs */
 	--nd-font-body: var(--nd-font-display);
 
 	/* Type scale (1.25 ratio, rounded). rem so user zoom works. */

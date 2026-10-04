@@ -2,7 +2,7 @@
 <script lang="ts">
 	import {
 		AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input,
-		HazardStripe, GlitchText, Barcode, Ruler, KanjiMark, color
+		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, color
 	} from '../lib/index.js';
 
 	let handle = $state('');
@@ -56,7 +56,7 @@
 	{/snippet}
 	{#snippet status()}
 		<span><Tag tone="success" dot pulse>online</Tag></span>
-		<span>node: tyo-01</span>
+		<span>node: szx-01</span>
 		<span>latency 12ms</span>
 		<span style="margin-left:auto">build 0.1.0 // root@neondeck:~#</span>
 	{/snippet}
@@ -75,7 +75,7 @@
 		</div>
 		<div class="hero-visual nd-brackets">
 			<div class="sun" aria-hidden="true"></div>
-			<KanjiMark text="未来都市" label="Future City" size="clamp(3rem, 7vw, 6rem)" />
+			<HanziMark text="霓虹都市" label="Neon City" face="tech" size="clamp(3rem, 7vw, 6rem)" />
 			<span class="scn nd-meta">/01</span>
 			<div class="coords nd-mono">
 				<span>X_36.1749</span><span>Y_-86.7676</span><span>Z_46.6827</span>
@@ -171,9 +171,9 @@
 					<table class="nd-table">
 						<thead><tr><th>Node</th><th>Region</th><th class="num">Ping</th><th>State</th></tr></thead>
 						<tbody>
-							<tr><td>arasaka-01</td><td>TYO</td><td class="num">12ms</td><td><Tag tone="success">up</Tag></td></tr>
-							<tr><td>kiroshi-07</td><td>LON</td><td class="num">88ms</td><td><Tag tone="warning">slow</Tag></td></tr>
-							<tr><td>militech-3</td><td>NY</td><td class="num">—</td><td><Tag tone="danger">down</Tag></td></tr>
+							<tr><td>longmen-01</td><td>SZX</td><td class="num">12ms</td><td><Tag tone="success">up</Tag></td></tr>
+							<tr><td>xinghe-07</td><td>SHA</td><td class="num">88ms</td><td><Tag tone="warning">slow</Tag></td></tr>
+							<tr><td>jinwu-3</td><td>HKG</td><td class="num">—</td><td><Tag tone="danger">down</Tag></td></tr>
 						</tbody>
 					</table>
 				</Panel>
@@ -191,13 +191,13 @@
 			<SectionHeader index="04" title="Editorial" meta="paper surface · posters" />
 			<div class="poster nd-paper">
 				<div class="poster-side">
-					<KanjiMark text="魅惑的" label="Enticing" tone="sun" size="clamp(3rem, 6vw, 5rem)" />
+					<HanziMark text="诱惑" label="Enticing" tone="sun" size="clamp(3rem, 6vw, 5rem)" />
 				</div>
 				<div class="poster-main">
 					<div class="poster-sun" aria-hidden="true"></div>
 					<p class="nd-label">Seductive ─── 009</p>
 					<h2 class="poster-title">Enticing</h2>
-					<p>Paper blocks borrow from Japanese poster collage: cream stock, black ink, one red sun. Use them for about pages, launches and long reads. Never for app chrome.</p>
+					<p>Paper blocks borrow from Chinese street-poster collage: cream stock, black ink, one red sun, big hanzi. Use them for about pages, launches and long reads. Never for app chrome.</p>
 					<Button variant="primary" arrow>Read story</Button>
 				</div>
 			</div>
@@ -225,12 +225,12 @@
 		width: min(60%, 22rem);
 		aspect-ratio: 1;
 		border-radius: 50%; /* the ONE allowed circle: the poster sun */
-		/* magenta core at 0.8 opacity keeps white kanji over it ≥4:1 (a pink core drops it to ~3.1) */
+		/* magenta core at 0.8 opacity keeps white hanzi over it ≥4:1 (a pink core drops it to ~3.1) */
 		background: radial-gradient(circle at 40% 35%, var(--nd-magenta) 30%, #8a0f78);
 		box-shadow: 0 0 80px color-mix(in srgb, var(--nd-magenta) 45%, transparent);
 		opacity: 0.8;
 	}
-	.hero-visual :global(.nd-kanji) { position: relative; color: var(--nd-text); text-shadow: 0 0 24px var(--nd-bg); }
+	.hero-visual :global(.nd-hanzi) { position: relative; color: var(--nd-text); text-shadow: 0 0 24px var(--nd-bg); }
 	.scn { position: absolute; top: var(--nd-space-4); left: var(--nd-space-4); color: var(--nd-accent); }
 	.scn2 { position: absolute; bottom: var(--nd-space-4); right: var(--nd-space-4); }
 	.coords {
@@ -282,7 +282,7 @@
 		/* keep copy off the sun: ink on sun-red is only 4.2:1 */
 		.poster { grid-template-columns: 1fr; }
 		.poster-side { padding: var(--nd-space-4); }
-		.poster-side :global(.nd-kanji) { writing-mode: horizontal-tb; }
+		.poster-side :global(.nd-hanzi) { writing-mode: horizontal-tb; }
 		.poster-main { padding: var(--nd-space-16) var(--nd-space-5) var(--nd-space-8); }
 		.poster-sun { width: 9rem; right: -2.5rem; top: -2.5rem; }
 		.poster-title { font-size: var(--nd-text-4xl); }

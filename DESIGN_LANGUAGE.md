@@ -8,7 +8,7 @@ Code lives in `neondeck/` (a Svelte 5 library). This doc is the *why* and the *r
 
 ## 1. The feel in one paragraph
 
-Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark. The only light comes from neon: hot magenta, electric cyan, and an acid-yellow sign. The interface is a machine, not a brochure. It is raw, systematic and honest about its structure. You can see the grid, the rulers, the numbered sections and the status readouts. Corners are cut, not rounded. Type is technical and uppercase where it labels things. Now and then a page breaks into a Japanese street poster, with cream paper, black ink, a red sun and huge kanji. That is the editorial voice.
+Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark. The only light comes from neon: hot magenta, electric cyan, and an acid-yellow sign. The interface is a machine, not a brochure. It is raw, systematic and honest about its structure. You can see the grid, the rulers, the numbered sections and the status readouts. Corners are cut, not rounded. Type is technical and uppercase where it labels things. Now and then a page breaks into a Chinese street poster, with cream paper, black ink, a red sun and huge hanzi. That is the editorial voice. The city is Shenzhen and Shanghai, not 1980s Tokyo: all CJK type is **Simplified Chinese**, never Japanese.
 
 ## 2. Sources (images/)
 
@@ -22,7 +22,7 @@ Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark
 | `look_and_feel/` Cyber Brutalism web page | **Web layout**: sticky top bar with a solid brand block, `+`-separated nav, SYS_TIME readout, `/01` numbered sections, hairline grid, mono uppercase, status readouts, hazard-tape footer. |
 | `look_and_feel/` cyberdeck HUDs (red/teal) | **App chrome**: chamfered panels, accent tab on panel tops, tick rulers, barcodes, binary strings, segmented progress, menu buttons with micro-captions. |
 | `look_and_feel/` phone widgets | Outline-neon cut-corner widgets on a carbon-fibre plate. Mixed neon colors per widget. |
-| `look_and_feel/` posters (Enticing, geisha, kanji, cyborg) | **Editorial**: cream paper, ink, red sun disc, vertical CJK type, stamp seals, collage. |
+| `look_and_feel/` posters (Enticing, geisha, calligraphy, cyborg) | **Editorial**: cream paper, ink, red sun disc, vertical CJK type, stamp seals, collage. The plates are mostly Japanese; we keep the layout and set the type in Simplified Chinese. |
 | `look_and_feel/` red monolith | Restraint. One beam of light in a dark scene is stronger than ten. |
 | `look_and_feel/` neon alley | Neon on grit. The glow is the only clean thing in the frame. |
 
@@ -72,11 +72,11 @@ magenta, cyan, yellow, violet, blue, coral, mustard, pink (`--nd-series-1..8` / 
 | Display + body | **Chakra Petch** 400–700 | Headings UPPERCASE, bold, tight leading (1.05). Body sentence case, 15px, leading 1.55, max 68ch. |
 | UI labels, buttons, nav | **Rajdhani** 600–700 | Always UPPERCASE, tracking 0.14em, 12–15px. |
 | Data, meta, IDs, numbers | **JetBrains Mono** 400/600 | Tabular nums. Every number, timestamp, coordinate, hash, version. Often lowercase-in-uppercase style: `SYS_TIME`, `CPU_USAGE`, `//SCN_01`. |
-| Decorative CJK | **Noto Sans JP** 900 | Huge, often vertical. Always has an English `aria-label`. Never carries meaning alone. |
+| Decorative hanzi | **Noto Sans SC** 900 (`face="gothic"`) or **ZCOOL QingKe HuangYou** (`face="tech"`, squared, pairs with Chakra Petch) | Simplified Chinese only, set with `lang="zh-Hans"` so browsers draw Chinese (not Japanese) glyph forms. Huge, often vertical. Always has an English `aria-label`. Never carries meaning alone. Use real Chinese words checked for meaning, e.g. 霓虹都市 (Neon City), 诱惑 (Enticing). Never Japanese kana or Japanese-only grammar (の, 的 as a Japanese adjective ending). |
 
 Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero size is `clamp(3rem, 9vw, 7rem)`. Use the type scale tokens `--nd-text-2xs … 5xl`. Never invent sizes.
 
-**Voice in copy:** short, declarative, a little menacing. Use machine idioms: `> READY`, `ACCESS GRANTED_`, `RENDERING... 87%`, `ROOT@APP : ~ #`. Use underscores in identifiers (`DATA_PORTAL`) and slashes for paths and indices (`/03`, `//SCN_01`). Don't overdo it: real labels must still be clear ("Save", not "COMMIT_PAYLOAD").
+**Voice in copy:** short, declarative, a little menacing. Sample names and places lean Chinese: nodes like `longmen-01`, regions `SZX`/`SHA`/`HKG`. Use invented names, never real companies. Use machine idioms: `> READY`, `ACCESS GRANTED_`, `RENDERING... 87%`, `ROOT@APP : ~ #`. Use underscores in identifiers (`DATA_PORTAL`) and slashes for paths and indices (`/03`, `//SCN_01`). Don't overdo it: real labels must still be clear ("Save", not "COMMIT_PAYLOAD").
 
 ## 5. Shape, line, light
 
@@ -96,7 +96,7 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 │ A │   main: max 80rem, gutter clamp(1rem,3vw,2.5rem)         │
 │ I │   sections stacked, 6rem apart                           │
 │ L │                                                          │
-└ > READY   node: tyo-01   latency 12ms  ·········  build 0.1.0 ┘  sticky status bar, 28px, mono
+└ > READY   node: szx-01   latency 12ms  ·········  build 0.1.0 ┘  sticky status bar, 28px, mono
 ```
 - **Brand block:** solid accent fill, dark text, top-right cut. Brand names end in `_` (`CYBR_`, `NEONDECK_`).
 - **Nav:** Rajdhani uppercase, `+` separators in accent. The active item is accent-colored with a glowing 2px underline.
@@ -105,7 +105,7 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 - Under 720px: rail and clock hide, nav wraps to a scrolling second row.
 
 ### Page anatomy (websites)
-1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual inside corner brackets, with an index tag `/01`, a coordinate box and `//SCN_01`. Image, kanji or 3D wireframe; ideally a neon sun disc behind.
+1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual inside corner brackets, with an index tag `/01`, a coordinate box and `//SCN_01`. Image, hanzi or 3D wireframe; ideally a neon sun disc behind.
 2. **Numbered sections:** every section opens with `SectionHeader` (`/02 CORE PRINCIPLES ───── meta`). Number them in page order.
 3. **Feature rows:** equal columns split by 1px vertical hairlines, inside top/bottom hairlines. Each has an index, a cyan uppercase title and dim short copy. No cards here.
 4. **Work/content grids:** Panels in a 12-col grid (3 or 4 across). Image on top, label row underneath with a ↗ arrow.
@@ -123,7 +123,7 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 4px grid (`--nd-space-*`). Inside panels: 16–20px padding, 8–16px between controls. Between page sections: 96px. Data UIs are dense. Marketing pages are airy, but the grid always shows.
 
 ## 7. Editorial / poster mode (`.nd-paper`)
-For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one** red sun disc bleeding off an edge. Inside paper the accent is **ink** (buttons are ink-black with cream text), because sun-red fails small-text contrast (§9). Vertical kanji sits in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
+For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one** red sun disc bleeding off an edge. Inside paper the accent is **ink** (buttons are ink-black with cream text), because sun-red fails small-text contrast (§9). Vertical hanzi sit in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
 
 ## 8. Motion
 Fast and mechanical: 80/140/220/420ms, ease `cubic-bezier(.2,.8,.2,1)` or `steps()`. Nothing bounces or springs. Allowed effects: glitch RGB-split on hover (headlines/logos), blinking `_` cursor, square status-dot pulse, neon flicker (**one** element per page, max), segmented meters filling. `prefers-reduced-motion` kills all of it.
@@ -157,10 +157,10 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - **Tints behind text are ≤14% neon.** A Tag's tone color on its own 10% tint passes for every neon.
 - **Anything with text that overlaps art needs an opaque background.** Example: the coordinate box over the sun.
 - **Text over a neon disc is large and white**, and the disc stays ≤80% opacity with a magenta (not pink) core, giving ≥4:1. Small text never sits on a neon disc.
-- **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun is for the disc, `KanjiMark tone="sun"` and titles ≥24px only. Keep body copy from running over the sun; on narrow screens shrink and move the disc.
+- **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun is for the disc, `HanziMark tone="sun"` and titles ≥24px only. Keep body copy from running over the sun; on narrow screens shrink and move the disc.
 - **Focus:** a 2px cyan outline, offset 2–3px. The offset means it is judged against the page background (14:1), not the button. Paper mode switches focus to ink. Never remove it.
 - **Translucent top bar** (88% bg): worst case is 4.9:1 when it scrolls over paper or yellow. Don't lower that opacity.
-- Decorative HUD (barcodes, rulers, kanji, coords) gets `aria-hidden` or an English `aria-label`.
+- Decorative HUD (barcodes, rulers, hanzi, coords) gets `aria-hidden` or an English `aria-label`.
 - Color is never the only signal. Tags carry words (`DOWN`, not just red).
 - `prefers-contrast: more` turns off glow and brightens lines and secondary text.
 
@@ -181,6 +181,6 @@ npm i ../sharable_assets/neondeck        # or file: dep / workspace
   import { AppShell, Panel, Button } from 'neondeck';
 </script>
 ```
-Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, KanjiMark, SysClock`. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
+Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, SysClock`. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
 
 New components must use only `--nd-*` tokens and follow §5. Then add them to the showcase page (`neondeck/src/routes/+page.svelte`).

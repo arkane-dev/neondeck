@@ -12,7 +12,7 @@ export { default as HazardStripe } from './components/HazardStripe.svelte';
 export { default as GlitchText } from './components/GlitchText.svelte';
 export { default as Barcode } from './components/Barcode.svelte';
 export { default as Ruler } from './components/Ruler.svelte';
-export { default as KanjiMark } from './components/KanjiMark.svelte';
+export { default as HanziMark } from './components/HanziMark.svelte';
 export { default as SysClock } from './components/SysClock.svelte';
 export * from './tokens.js';
 export type { Accent, Tone } from './types.js';
