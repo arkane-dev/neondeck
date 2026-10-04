@@ -22,6 +22,11 @@ export const color = {
 	violet: '#a66bff',
 	yellow: '#f5ec58',
 	red: '#ff3b52',
+	jade: '#3ff0b8',
+	gold: '#f6bd6a',
+	cinnabar: '#b81f1a',
+	fogTeal: '#2f7c97',
+	fogRose: '#7d3357',
 	streetMustard: '#efb22a',
 	streetCoral: '#ef6352',
 	streetTeal: '#0b5566',
@@ -58,11 +63,11 @@ export const series = [
 	color.magenta,
 	color.cyan,
 	color.yellow,
+	color.jade,
 	color.violet,
+	color.gold,
 	color.blue,
-	color.streetCoral,
-	color.streetMustard,
-	color.pink
+	color.streetCoral
 ] as const;
 
 export const font = {

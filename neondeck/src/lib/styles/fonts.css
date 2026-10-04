@@ -9,5 +9,6 @@
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/600.css';
 /* Chinese fonts are split by unicode-range, so only glyphs actually used get downloaded. */
+@import '@fontsource/noto-sans-sc/400.css'; /* hanzi inside running text (fallback in every stack) */
 @import '@fontsource/noto-sans-sc/900.css';
 @import '@fontsource/zcool-qingke-huangyou/400.css';

@@ -80,6 +80,26 @@
 	background: repeating-linear-gradient(-45deg, var(--nd-line) 0 1px, transparent 1px 7px);
 }
 
+/* Fog: city mist rising from the street (Chongqing / pagoda plates).
+ * Drawn on its own layer, so it stacks with .nd-grid-bg / .nd-brackets on the same element. */
+.nd-fog { position: relative; isolation: isolate; }
+.nd-fog::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 90% 60% at 30% 100%, color-mix(in srgb, var(--nd-fog-teal) 22%, transparent), transparent 70%),
+		radial-gradient(ellipse 70% 50% at 85% 90%, color-mix(in srgb, var(--nd-fog-rose) 28%, transparent), transparent 70%);
+}
+/* LED panel: fine dot grid like a building-sized screen. Pair with DotMatrix. */
+.nd-led-bg {
+	background-color: var(--nd-void);
+	background-image: radial-gradient(circle, var(--nd-line) 0.9px, transparent 1.2px);
+	background-size: 6px 6px;
+}
+
 /* Scanlines: add to a full-screen fixed overlay, or a single hero image. */
 .nd-scanlines { position: relative; }
 .nd-scanlines::after {

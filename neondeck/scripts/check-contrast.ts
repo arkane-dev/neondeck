@@ -31,7 +31,7 @@ for (const [s, bg] of Object.entries(surfaces)) {
 	add('1.4.3 text', `text-mute on ${s}`, C.textMute, bg, 4.5);
 }
 
-const neon = { magenta: C.magenta, pink: C.pink, cyan: C.cyan, blue: C.blue, violet: C.violet, yellow: C.yellow, red: C.red };
+const neon = { magenta: C.magenta, pink: C.pink, cyan: C.cyan, blue: C.blue, violet: C.violet, yellow: C.yellow, red: C.red, jade: C.jade, gold: C.gold };
 for (const [n, c] of Object.entries(neon)) {
 	add('1.4.3 neon text', `${n} on bg`, c, C.bg, 4.5);
 	add('1.4.3 neon text', `${n} on surface-2`, c, C.surface2, 4.5);
@@ -48,6 +48,20 @@ add('1.4.11 non-text', 'panel/input edge (line-strong) vs surface-1', C.lineStro
 add('1.4.11 non-text', 'input edge vs field (void)', C.lineStrong, C.void, 3);
 add('1.4.11 non-text', 'focus ring (cyan) vs bg', C.cyan, C.bg, 3);
 add('1.4.11 non-text', 'focus ring (cyan) vs surface-3', C.cyan, C.surface3, 3);
+
+// China layer
+for (const [n, c] of Object.entries(neon)) {
+	// NeonSign: glyph = 35% tone + white, on 7% tone over void; caption = tone on void
+	add('china', `NeonSign ${n} glyph`, mix(c, '#ffffff', 0.35), mix(c, C.void, 0.07), 4.5);
+	add('china', `NeonSign ${n} caption`, c, C.void, 4.5);
+}
+add('china', 'Seal: paper glyphs on cinnabar', C.paper, C.cinnabar, 4.5);
+add('china', 'Seal relief: cinnabar on paper', C.cinnabar, C.paper, 4.5);
+add('china', 'Seal block vs bg (non-text edge)', C.cinnabar, C.bg, 3);
+const fogT = mix(C.fogTeal, C.bg, 0.22), fogR = mix(C.fogRose, C.bg, 0.28);
+add('china', 'text-mute on teal fog (22%)', C.textMute, fogT, 4.5);
+add('china', 'text-mute on rose fog (28%)', C.textMute, fogR, 4.5);
+add('china', 'magenta on rose fog (28%)', C.magenta, fogR, 4.5);
 
 add('paper', 'ink on paper', P.text, C.paper, 4.5);
 add('paper', 'text-dim on paper', P.textDim, C.paper, 4.5);

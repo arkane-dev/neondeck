@@ -8,7 +8,7 @@ Code lives in `neondeck/` (a Svelte 5 library). This doc is the *why* and the *r
 
 ## 1. The feel in one paragraph
 
-Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark. The only light comes from neon: hot magenta, electric cyan, and an acid-yellow sign. The interface is a machine, not a brochure. It is raw, systematic and honest about its structure. You can see the grid, the rulers, the numbered sections and the status readouts. Corners are cut, not rounded. Type is technical and uppercase where it labels things. Now and then a page breaks into a Chinese street poster, with cream paper, black ink, a red sun and huge hanzi. That is the editorial voice. The city is Shenzhen and Shanghai, not 1980s Tokyo: all CJK type is **Simplified Chinese**, never Japanese.
+Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark. The only light comes from neon: hot magenta, electric cyan, and an acid-yellow sign. The interface is a machine, not a brochure. It is raw, systematic and honest about its structure. You can see the grid, the rulers, the numbered sections and the status readouts. Corners are cut, not rounded. Type is technical and uppercase where it labels things. The city is **Chongqing, Shanghai and Shenzhen**, not 1980s Tokyo. Streets are walls of vertical neon signboards, and every sign is bilingual. Building faces are LED screens, and the drone show draws a dragon in points of light over the river. Mist hangs between the towers. All CJK type is **Simplified Chinese**, never Japanese. Now and then a page breaks into a Chinese street poster, with cream paper, black ink, huge hanzi and one cinnabar seal. That is the editorial voice.
 
 ## 2. Sources (images/)
 
@@ -22,7 +22,11 @@ Night City at 3 a.m., seen through a cyberdeck. A blue-black world, wet and dark
 | `look_and_feel/` Cyber Brutalism web page | **Web layout**: sticky top bar with a solid brand block, `+`-separated nav, SYS_TIME readout, `/01` numbered sections, hairline grid, mono uppercase, status readouts, hazard-tape footer. |
 | `look_and_feel/` cyberdeck HUDs (red/teal) | **App chrome**: chamfered panels, accent tab on panel tops, tick rulers, barcodes, binary strings, segmented progress, menu buttons with micro-captions. |
 | `look_and_feel/` phone widgets | Outline-neon cut-corner widgets on a carbon-fibre plate. Mixed neon colors per widget. |
-| `look_and_feel/` posters (Enticing, geisha, calligraphy, cyborg) | **Editorial**: cream paper, ink, red sun disc, vertical CJK type, stamp seals, collage. The plates are mostly Japanese; we keep the layout and set the type in Simplified Chinese. |
+| `look_and_feel/` posters (Enticing, geisha, calligraphy, cyborg) | **Editorial**: cream paper, ink, vertical CJK type, stamp seals, collage. The plates are mostly Japanese, so we keep the layout, set the type in Simplified Chinese, and drop the red-sun disc (a Japanese flag motif) for a cinnabar seal. |
+| `china/` Deni World, Chongqing travel guide | **Vertical neon signboards**: one hanzi per lit cell, each sign its own color, pinyin caption under it (重庆 / CHONG QING). Layered, dense, bilingual. → `NeonSign`. |
+| `china/` Chongqing skyscraper, Bund drone show, LED face | **LED / dot-matrix lettering**: words built from points of light (上海 + dragon, red pixel face). Façade text runs vertically, Chinese beside Latin. → `DotMatrix`, `.nd-led-bg`. |
+| `china/` neon pagoda, giant Buddha street | **Mist**: rose fog (#7d3357) and teal fog (#52a6c0) between buildings; temple silhouettes in neon. → `.nd-fog`. |
+| `china/` all plates | New colors: jade-green signs (#50efbb), lantern/hotpot gold (#f4c273). Magenta and cyan confirmed as the core. |
 | `look_and_feel/` red monolith | Restraint. One beam of light in a dark scene is stronger than ten. |
 | `look_and_feel/` neon alley | Neon on grit. The glow is the only clean thing in the frame. |
 
@@ -57,13 +61,22 @@ Never use pure black or neutral grey. Every dark is tinted blue/violet.
 | `--nd-violet` | #a66bff | ambient haze, chart series |
 | `--nd-pink` | #ff5fb4 | secondary neon, gradients |
 
-Components use **semantic** tokens (`--nd-accent`, `--nd-accent-2`, `--nd-success`, `--nd-warning`, `--nd-danger`, `--nd-info`, `--nd-focus`), not raw names. Swap the accent per section or per app with `data-nd-accent="cyan|magenta|yellow|red|violet"`. Each app may pick its own home accent. Magenta is the house default.
+Components use **semantic** tokens (`--nd-accent`, `--nd-accent-2`, `--nd-success`, `--nd-warning`, `--nd-danger`, `--nd-info`, `--nd-focus`), not raw names. Swap the accent per section or per app with `data-nd-accent="cyan|magenta|yellow|red|violet|jade|gold"`. Each app may pick its own home accent. Magenta is the house default.
+
+### China (signs, lanterns, seals, mist)
+| Token | Hex | Role |
+|---|---|---|
+| `--nd-jade` | #3ff0b8 | jade-green neon signs, charts. An accent option: `data-nd-accent="jade"` |
+| `--nd-gold` | #f6bd6a | lantern / hotpot-sign amber, warm highlight. `data-nd-accent="gold"` |
+| `--nd-cinnabar` | #b81f1a | 朱砂 seal-stamp red. Seals and paper accents. **Ink, not light: it never glows.** |
+| `--nd-fog-teal` | #2f7c97 | mist, only inside `.nd-fog`, ≤22% |
+| `--nd-fog-rose` | #7d3357 | mist, only inside `.nd-fog`, ≤28% |
 
 ### Street + Paper (secondary)
-Street (`mustard #efb22a`, `coral #ef6352`, `teal #0b5566`, `khaki #a0966d`) is for illustration and chart series 6+. It never goes on UI chrome. Paper (`paper #ece4cf`, `ink #121214`, `sun #e8202f`) is for editorial blocks only.
+Street (`mustard #efb22a`, `coral #ef6352`, `teal #0b5566`, `khaki #a0966d`) is for illustration and chart series 6+. It never goes on UI chrome. Paper (`paper #ece4cf`, `ink #121214`) is for editorial blocks only. `sun #e8202f` is kept for older pages but is **deprecated**: the red disc reads as the Japanese flag. Use a `Seal` instead.
 
 ### Chart series order
-magenta, cyan, yellow, violet, blue, coral, mustard, pink (`--nd-series-1..8` / `series` in tokens.ts).
+magenta, cyan, yellow, jade, violet, gold, blue, coral (`--nd-series-1..8` / `series` in tokens.ts).
 
 ## 4. Typography
 
@@ -80,12 +93,16 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 
 ## 5. Shape, line, light
 
-- **Radius is 0.** Corners are **cut (chamfered)**: `--nd-cut-xs/sm/md/lg` = 4/8/14/22px. Panels cut top-left + bottom-right. Buttons cut top-right only. Inputs cut bottom-right. The **only** circle allowed is the poster sun (plus status dots, which are square).
+- **Radius is 0.** Corners are **cut (chamfered)**: `--nd-cut-xs/sm/md/lg` = 4/8/14/22px. Panels cut top-left + bottom-right. Buttons cut top-right only. Inputs cut bottom-right. No circles, except LED dots inside `DotMatrix`. Status dots are square.
 - **1px lines everywhere.** Frames are 1px. Grids are 1px. Dividers are 1px. Never use a 2px+ border except the active-nav underline and the code-block left rule.
 - **Borders come from a wrapper** (frame div with border-color background, inner div clipped 1px smaller), because `clip-path` eats CSS borders. `Panel`, `Button` and `Input` already do this. Copy the pattern for new framed things.
-- **Glow = light source.** A two-layer shadow (4px core + 16px halo). **One glowing element per view region**: the primary CTA, the active nav item, or one hero word. Glowing panels are rare (one per screen at most). Glow scales with `--nd-glow-size` and is turned off under `prefers-contrast: more`.
+- **Glow = light source.** A two-layer shadow (4px core + 16px halo). **One glowing element per view region**: the primary CTA, the active nav item, one hero word, or **one sign cluster** (a group of `NeonSign`s reads as one lit street, so it counts once). Glowing panels are rare (one per screen at most). Glow scales with `--nd-glow-size` and is turned off under `prefers-contrast: more`.
 - **HUD furniture** (decorative, `aria-hidden`): corner brackets `.nd-brackets`, tick `Ruler`, `Barcode` stamps, coordinate boxes, binary strings, `//SCN_01` tags. Use them at edges and in empty space. Never put them inside dense content.
-- **Textures:** `.nd-grid-bg` (48px blueprint grid, heroes), `.nd-dot-bg`, `.nd-carbon-bg` (widget plates), `.nd-hatch` (empty/disabled), `.nd-hazard` (caution tape), `.nd-scanlines` (heroes or a full-screen fx overlay; never over body text).
+- **Signage** (from `images/china`):
+  - `NeonSign` is a vertical signboard: a 2px tube frame (the one allowed 2px border), white-hot glyphs with a colored halo, one character per cell, and a spaced pinyin caption under it. Group 2–4 signs in **different tones** and at **staggered heights**, like a street. Pick real words: 不夜城 (city that never sleeps), 霓虹 (neon), 山城 (mountain city), 重庆, 火锅, 你好.
+  - `DotMatrix` renders text as LEDs for façades, drone-show moments and big brand marks. Use ≥16 rows for hanzi, and place it on `.nd-led-bg`.
+  - `Seal` (印章) is the red mark. *Intaglio* (白文, the default) cuts cream glyphs into a cinnabar block. *Relief* (朱文) is cinnabar glyphs and border on its own paper. Four characters read in columns from right to left. Tilt ±4° at most for a hand-stamped look. It never glows. Use it as a sign-off, an approval stamp or a brand mark on paper.
+- **Textures:** `.nd-fog` (street mist, its own layer, so it stacks with grids and brackets), `.nd-led-bg` (LED panel dots), `.nd-grid-bg` (48px blueprint grid, heroes), `.nd-dot-bg`, `.nd-carbon-bg` (widget plates), `.nd-hatch` (empty/disabled), `.nd-hazard` (caution tape), `.nd-scanlines` (heroes or a full-screen fx overlay; never over body text).
 
 ## 6. Layout
 
@@ -105,8 +122,8 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 - Under 720px: rail and clock hide, nav wraps to a scrolling second row.
 
 ### Page anatomy (websites)
-1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual inside corner brackets, with an index tag `/01`, a coordinate box and `//SCN_01`. Image, hanzi or 3D wireframe; ideally a neon sun disc behind.
-2. **Numbered sections:** every section opens with `SectionHeader` (`/02 CORE PRINCIPLES ───── meta`). Number them in page order.
+1. **Hero:** a 2-column split (≈55/45) on `.nd-grid-bg`. Left: `> RENDERING...` meta, huge 2-line title (line 1 white with glitch-on-hover, line 2 neon), mono neon tagline, dim lede, primary button + ghost button. Right: a HUD visual on `.nd-grid-bg` + `.nd-fog` inside corner brackets, with an index tag `/01`, a coordinate box (real coordinates, e.g. Chongqing `N_29.5630 E_106.5516`) and `//CKG_01`. The centerpiece is a **cluster of 2–4 NeonSigns** at staggered heights (or an image, LED text, or 3D wireframe).
+2. **Numbered, bilingual sections:** every section opens with `SectionHeader` and a `zh` title (`/02 核心原则 CORE PRINCIPLES ───── meta`). Number them in page order. Chinese comes first, as on the street signs.
 3. **Feature rows:** equal columns split by 1px vertical hairlines, inside top/bottom hairlines. Each has an index, a cyan uppercase title and dim short copy. No cards here.
 4. **Work/content grids:** Panels in a 12-col grid (3 or 4 across). Image on top, label row underneath with a ↗ arrow.
 5. **Editorial break** (optional, one per page max): a paper poster block.
@@ -123,7 +140,7 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 4px grid (`--nd-space-*`). Inside panels: 16–20px padding, 8–16px between controls. Between page sections: 96px. Data UIs are dense. Marketing pages are airy, but the grid always shows.
 
 ## 7. Editorial / poster mode (`.nd-paper`)
-For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one** red sun disc bleeding off an edge. Inside paper the accent is **ink** (buttons are ink-black with cream text), because sun-red fails small-text contrast (§9). Vertical hanzi sit in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
+For about pages, launches, long reads and print. Cream paper with a halftone dot, black ink and **one cinnabar `Seal`** in a corner (no sun disc). Inside paper the accent is **ink** (buttons are ink-black with cream text). Vertical hanzi sit in a black side band. The title is huge and set in Chakra Petch ink. `.nd-paper` re-maps the text, line and accent tokens, so components inside it just work. Never use it for app chrome, forms or dashboards.
 
 ## 8. Motion
 Fast and mechanical: 80/140/220/420ms, ease `cubic-bezier(.2,.8,.2,1)` or `steps()`. Nothing bounces or springs. Allowed effects: glitch RGB-split on hover (headlines/logos), blinking `_` cursor, square status-dot pulse, neon flicker (**one** element per page, max), segmented meters filling. `prefers-reduced-motion` kills all of it.
@@ -134,7 +151,7 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - **1.4.11 Non-text Contrast:** component boundaries (input edges, button edges), focus rings and meaningful graphics (meter segments) need 3:1 against what is next to them.
 
 **How it's enforced**
-- `npm run contrast` (in `neondeck/`) checks 64 token pairs and exits 1 on any failure. Run it after touching a color.
+- `npm run contrast` (in `neondeck/`) checks 98 token pairs and exits 1 on any failure. Run it after touching a color.
 - axe-core on the rendered showcase shows 0 violations at 1440px and 400px. 2026-10-04: 1 real bug found and fixed (button captions).
 
 **Measured on `--nd-bg`**
@@ -157,7 +174,8 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - **Tints behind text are ≤14% neon.** A Tag's tone color on its own 10% tint passes for every neon.
 - **Anything with text that overlaps art needs an opaque background.** Example: the coordinate box over the sun.
 - **Text over a neon disc is large and white**, and the disc stays ≤80% opacity with a magenta (not pink) core, giving ≥4:1. Small text never sits on a neon disc.
-- **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun is for the disc, `HanziMark tone="sun"` and titles ≥24px only. Keep body copy from running over the sun; on narrow screens shrink and move the disc.
+- **Paper mode:** sun-red on paper is only 3.5:1, and dark text on sun-red is 4.2:1. So inside `.nd-paper` the accent becomes **ink**: buttons are ink with cream text, at 14.8:1. Sun-red is for `HanziMark tone="sun"` and titles ≥24px only. Cinnabar (#b81f1a) is darker, so it passes as small text on paper (5.1:1) and carries cream glyphs at 5.1:1.
+- **China layer:** sign glyphs are 12–17:1 and pinyin captions are ≥5.4:1. Cinnabar on the dark UI is only 3.1:1, so **relief seals always bring their own paper backing** (axe caught this). Fog is capped at 22% teal / 28% rose so `text-mute` stays ≥4.7:1 over it.
 - **Focus:** a 2px cyan outline, offset 2–3px. The offset means it is judged against the page background (14:1), not the button. Paper mode switches focus to ink. Never remove it.
 - **Translucent top bar** (88% bg): worst case is 4.9:1 when it scrolls over paper or yellow. Don't lower that opacity.
 - Decorative HUD (barcodes, rulers, hanzi, coords) gets `aria-hidden` or an English `aria-label`.
@@ -165,9 +183,9 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 - `prefers-contrast: more` turns off glow and brightens lines and secondary text.
 
 ## 10. Do / Don't
-**Do:** cut corners · show the grid · number sections · put numbers in mono · use one glow per zone · add `_` cursors and `>` prompts · use hairlines over boxes · use dark blue-black over black.
+**Do:** cut corners · show the grid · number sections · put numbers in mono · use one glow per zone · add `_` cursors and `>` prompts · use hairlines over boxes · use dark blue-black over black · pair hanzi with pinyin/English · stagger signs like a street · sign off with a seal.
 
-**Don't:** rounded corners · drop shadows for elevation (use surface steps instead) · gradients on buttons · pure #000 or #fff · grey neutrals · emoji as icons · more than 2 neon hues in one component · light mode · glassmorphism blur, except the top bar · Inter/Roboto/system fonts.
+**Don't:** rounded corners · drop shadows for elevation (use surface steps instead) · gradients on buttons · pure #000 or #fff · grey neutrals · emoji as icons · more than 2 neon hues in one component · light mode · glassmorphism blur, except the top bar · Inter/Roboto/system fonts · Japanese kana or red-sun discs · real Chinese company names or logos · machine-translated Chinese (check every word's meaning) · glowing seals.
 
 ## 11. Using it
 ```bash
@@ -181,6 +199,6 @@ npm i ../sharable_assets/neondeck        # or file: dep / workspace
   import { AppShell, Panel, Button } from 'neondeck';
 </script>
 ```
-Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, SysClock`. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
+Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, SysClock`. `SectionHeader` takes `zh` for a bilingual title. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
 
 New components must use only `--nd-*` tokens and follow §5. Then add them to the showcase page (`neondeck/src/routes/+page.svelte`).

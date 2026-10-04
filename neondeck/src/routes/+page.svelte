@@ -2,7 +2,7 @@
 <script lang="ts">
 	import {
 		AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input,
-		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, color
+		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, color
 	} from '../lib/index.js';
 
 	let handle = $state('');
@@ -25,6 +25,13 @@
 		['violet', color.violet, 'ambient · charts'],
 		['pink', color.pink, 'secondary neon']
 	];
+	const china: [string, string, string][] = [
+		['jade', color.jade, 'jade signs · charts'],
+		['gold', color.gold, 'lanterns · warm highlight'],
+		['cinnabar', color.cinnabar, 'seal stamps · never glows'],
+		['fog-teal', color.fogTeal, 'mist ≤22%'],
+		['fog-rose', color.fogRose, 'mist ≤28%']
+	];
 	const street: [string, string][] = [
 		['street-mustard', color.streetMustard],
 		['street-coral', color.streetCoral],
@@ -37,7 +44,8 @@
 		['Cut, never round', 'Chamfered corners on every frame. Radius is always 0.'],
 		['Grid is visible', 'Hairlines, rulers, numbered sections. Show the structure.'],
 		['One glow per zone', 'Neon is a light source. If everything glows, nothing does.'],
-		['Data is mono', 'Numbers, IDs, timestamps: JetBrains Mono, tabular.']
+		['Data is mono', 'Numbers, IDs, timestamps: JetBrains Mono, tabular.'],
+		['Two scripts', 'Hanzi with pinyin or English beside it, like a Chongqing street sign.']
 	];
 </script>
 
@@ -56,7 +64,7 @@
 	{/snippet}
 	{#snippet status()}
 		<span><Tag tone="success" dot pulse>online</Tag></span>
-		<span>node: szx-01</span>
+		<span>node: ckg-01 · 重庆</span>
 		<span>latency 12ms</span>
 		<span style="margin-left:auto">build 0.1.0 // root@neondeck:~#</span>
 	{/snippet}
@@ -73,21 +81,24 @@
 				<Button size="lg" variant="ghost">View manifesto ⌗</Button>
 			</div>
 		</div>
-		<div class="hero-visual nd-brackets">
-			<div class="sun" aria-hidden="true"></div>
-			<HanziMark text="霓虹都市" label="Neon City" face="tech" size="clamp(3rem, 7vw, 6rem)" />
+		<div class="hero-visual nd-brackets nd-fog">
 			<span class="scn nd-meta">/01</span>
-			<div class="coords nd-mono">
-				<span>X_36.1749</span><span>Y_-86.7676</span><span>Z_46.6827</span>
+			<div class="signs">
+				<NeonSign text="不夜城" label="City that never sleeps" caption="BU YE CHENG" tone="magenta" size="clamp(3rem, 5.5vw, 5rem)" />
+				<NeonSign text="霓虹" label="Neon" caption="NI HONG" tone="cyan" size="clamp(2.2rem, 4vw, 3.6rem)" />
+				<NeonSign text="山城" label="Mountain City (Chongqing)" caption="SHAN CHENG" tone="gold" size="clamp(2.2rem, 4vw, 3.6rem)" flicker />
 			</div>
-			<span class="scn2 nd-meta">//SCN_01</span>
+			<div class="coords nd-mono">
+				<span>N_29.5630</span><span>E_106.5516</span><span>ALT_244M</span>
+			</div>
+			<span class="scn2 nd-meta">//CKG_01</span>
 		</div>
 	</section>
 
 	<div class="content">
 		<!-- /01 PALETTE -->
 		<section id="palette">
-			<SectionHeader index="01" title="Palette" meta="sampled from images/colors" />
+			<SectionHeader index="01" zh="调色板" title="Palette" meta="sampled from images/colors + images/china" />
 			<p class="nd-label">Base — night sky to wet asphalt</p>
 			<div class="swatches">
 				{#each swatches as [name, hex, use] (name)}
@@ -100,6 +111,12 @@
 					<div class="sw"><span class="chip glow" style:background={hex} style:--g={hex}></span><b>{name}</b><span class="nd-meta">{hex} · {use}</span></div>
 				{/each}
 			</div>
+			<p class="nd-label">China — signs, lanterns, seals, mist</p>
+			<div class="swatches">
+				{#each china as [name, hex, use] (name)}
+					<div class="sw"><span class="chip" style:background={hex}></span><b>{name}</b><span class="nd-meta">{hex} · {use}</span></div>
+				{/each}
+			</div>
 			<p class="nd-label">Street + paper — illustration, editorial, extra series</p>
 			<div class="swatches">
 				{#each street as [name, hex] (name)}
@@ -110,7 +127,7 @@
 
 		<!-- /02 PRINCIPLES -->
 		<section id="principles">
-			<SectionHeader index="02" title="Core principles" />
+			<SectionHeader index="02" zh="核心原则" title="Core principles" />
 			<div class="principles">
 				{#each principles as [t, d], i (t)}
 					<div class="pr">
@@ -124,7 +141,7 @@
 
 		<!-- /03 COMPONENTS: dashboard composition -->
 		<section id="components">
-			<SectionHeader index="03" title="Components" meta="svelte 5 · runes" />
+			<SectionHeader index="03" zh="组件" title="Components" meta="svelte 5 · runes" />
 			<div class="dash">
 				<Panel title="System status" index="04" meta="REV_22" class="span-2">
 					<div class="readouts">
@@ -173,6 +190,7 @@
 						<tbody>
 							<tr><td>longmen-01</td><td>SZX</td><td class="num">12ms</td><td><Tag tone="success">up</Tag></td></tr>
 							<tr><td>xinghe-07</td><td>SHA</td><td class="num">88ms</td><td><Tag tone="warning">slow</Tag></td></tr>
+							<tr><td>shancheng-2</td><td>CKG</td><td class="num">9ms</td><td><Tag tone="success">up</Tag></td></tr>
 							<tr><td>jinwu-3</td><td>HKG</td><td class="num">—</td><td><Tag tone="danger">down</Tag></td></tr>
 						</tbody>
 					</table>
@@ -183,21 +201,40 @@
 					<div style="margin-top: var(--nd-space-4)"><Ruler labels={['N', 'E', 'S', 'W']} /></div>
 					<p class="nd-meta" style="margin-top: var(--nd-space-4)">ROOT@NEONDECK : ~ #<span class="nd-cursor"></span></p>
 				</Panel>
+
+				<Panel title="Signage" index="09" meta="霓虹 · 灯牌" class="span-2">
+					<div class="signage">
+						<div class="sign-row">
+							<NeonSign text="重庆" label="Chongqing" caption="CHONG QING" tone="red" size="2.4rem" />
+							<NeonSign text="火锅" label="Hotpot" caption="HUO GUO" tone="gold" size="2.4rem" />
+							<NeonSign text="你好" label="Hello" caption="NI HAO" tone="jade" size="2.4rem" />
+							<NeonSign text="上海" label="Shanghai" caption="SHANG HAI" tone="violet" size="2.4rem" face="tech" />
+						</div>
+						<div class="led nd-led-bg">
+							<DotMatrix text="霓虹甲板" label="Neon Deck" tone="magenta" height="4.5rem" />
+						</div>
+						<div class="seals">
+							<Seal text="霓虹甲板" label="Neon Deck seal" size="5rem" />
+							<Seal text="通过" label="Approved" variant="relief" size="5rem" tilt={-3} />
+							<Seal text="印" label="Seal" size="3rem" />
+						</div>
+					</div>
+				</Panel>
 			</div>
 		</section>
 
 		<!-- /04 EDITORIAL: poster plate -->
 		<section id="editorial">
-			<SectionHeader index="04" title="Editorial" meta="paper surface · posters" />
+			<SectionHeader index="04" zh="专题" title="Editorial" meta="paper surface · posters" />
 			<div class="poster nd-paper">
 				<div class="poster-side">
 					<HanziMark text="诱惑" label="Enticing" tone="sun" size="clamp(3rem, 6vw, 5rem)" />
 				</div>
 				<div class="poster-main">
-					<div class="poster-sun" aria-hidden="true"></div>
+					<div class="poster-seal"><Seal text="霓虹甲板" label="Neon Deck seal" size="clamp(6rem, 12vw, 10rem)" tilt={-2} /></div>
 					<p class="nd-label">Seductive ─── 009</p>
 					<h2 class="poster-title">Enticing</h2>
-					<p>Paper blocks borrow from Chinese street-poster collage: cream stock, black ink, one red sun, big hanzi. Use them for about pages, launches and long reads. Never for app chrome.</p>
+					<p>Paper blocks borrow from Chinese street-poster collage: cream stock, black ink, big hanzi and one cinnabar seal. Use them for about pages, launches and long reads. Never for app chrome.</p>
 					<Button variant="primary" arrow>Read story</Button>
 				</div>
 			</div>
@@ -220,17 +257,9 @@
 	.lede { color: var(--nd-text-dim); max-width: 46ch; }
 	.row { display: flex; flex-wrap: wrap; gap: var(--nd-space-4); align-items: center; }
 	.hero-visual { --nd-bracket-color: var(--nd-accent); position: relative; display: grid; place-items: center; margin: var(--nd-space-8); overflow: hidden; }
-	.sun {
-		position: absolute;
-		width: min(60%, 22rem);
-		aspect-ratio: 1;
-		border-radius: 50%; /* the ONE allowed circle: the poster sun */
-		/* magenta core at 0.8 opacity keeps white hanzi over it ≥4:1 (a pink core drops it to ~3.1) */
-		background: radial-gradient(circle at 40% 35%, var(--nd-magenta) 30%, #8a0f78);
-		box-shadow: 0 0 80px color-mix(in srgb, var(--nd-magenta) 45%, transparent);
-		opacity: 0.8;
-	}
-	.hero-visual :global(.nd-hanzi) { position: relative; color: var(--nd-text); text-shadow: 0 0 24px var(--nd-bg); }
+	.signs { position: relative; display: flex; align-items: flex-start; gap: clamp(1rem, 3vw, 2.5rem); }
+	.signs > :global(:nth-child(2)) { margin-top: 4rem; }
+	.signs > :global(:nth-child(3)) { margin-top: 1.5rem; }
 	.scn { position: absolute; top: var(--nd-space-4); left: var(--nd-space-4); color: var(--nd-accent); }
 	.scn2 { position: absolute; bottom: var(--nd-space-4); right: var(--nd-space-4); }
 	.coords {
@@ -240,7 +269,7 @@
 		display: grid;
 		padding: var(--nd-space-2) var(--nd-space-3);
 		border: 1px solid var(--nd-accent-2);
-		background: color-mix(in srgb, var(--nd-accent-2) 12%, var(--nd-bg)); /* opaque: it overlaps the sun */
+		background: color-mix(in srgb, var(--nd-accent-2) 12%, var(--nd-bg)); /* opaque: it can overlap the signs */
 		color: var(--nd-accent-2);
 		font-size: var(--nd-text-xs);
 	}
@@ -264,27 +293,33 @@
 	.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--nd-space-6); margin-bottom: var(--nd-space-6); }
 	.meters { display: grid; gap: var(--nd-space-4); }
 	.menu { display: grid; gap: var(--nd-space-2); }
+	.signage { display: grid; gap: var(--nd-space-6); }
+	.sign-row { display: flex; flex-wrap: wrap; gap: var(--nd-space-6); align-items: flex-start; }
+	.led { padding: var(--nd-space-4); border: 1px solid var(--nd-line); }
+	.seals { display: flex; flex-wrap: wrap; gap: var(--nd-space-6); align-items: center; }
 	.tags { display: flex; flex-wrap: wrap; gap: var(--nd-space-2); margin-bottom: var(--nd-space-4); }
 
 	.poster { display: grid; grid-template-columns: auto 1fr; min-height: 26rem; overflow: hidden; }
 	.poster-side { display: grid; place-items: center; padding: var(--nd-space-6); background: var(--nd-ink); }
 	.poster-main { position: relative; padding: var(--nd-space-12) var(--nd-space-10); }
-	.poster-main > :not(.poster-sun) { position: relative; }
+	.poster-main > p { position: relative; }
 	.poster-main > p { max-width: 42ch; }
-	.poster-sun { position: absolute; right: -4rem; top: -3rem; width: 20rem; aspect-ratio: 1; border-radius: 50%; background: var(--nd-sun); opacity: 0.92; }
+	.poster-seal { position: absolute; right: var(--nd-space-8); top: var(--nd-space-8); }
 	.poster-title { font-size: var(--nd-text-hero); font-family: var(--nd-font-display); color: var(--nd-ink); margin: var(--nd-space-2) 0 var(--nd-space-4); }
 
 	@media (max-width: 960px) {
 		.hero { grid-template-columns: 1fr; }
-		.hero-visual { min-height: 18rem; }
+		.hero-visual { min-height: 30rem; }
+		.coords { top: auto; right: auto; bottom: var(--nd-space-4); left: var(--nd-space-4); }
 		.dash { grid-template-columns: 1fr; }
 		.dash :global(.span-2) { grid-column: auto; }
-		/* keep copy off the sun: ink on sun-red is only 4.2:1 */
+		/* seal shrinks into the corner, clear of the copy */
 		.poster { grid-template-columns: 1fr; }
 		.poster-side { padding: var(--nd-space-4); }
 		.poster-side :global(.nd-hanzi) { writing-mode: horizontal-tb; }
 		.poster-main { padding: var(--nd-space-16) var(--nd-space-5) var(--nd-space-8); }
-		.poster-sun { width: 9rem; right: -2.5rem; top: -2.5rem; }
+		.poster-seal { right: var(--nd-space-4); top: var(--nd-space-4); }
+		.poster-seal :global(.nd-seal) { --size: 4.5rem !important; }
 		.poster-title { font-size: var(--nd-text-4xl); }
 	}
 </style>

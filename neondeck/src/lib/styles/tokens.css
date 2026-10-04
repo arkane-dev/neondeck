@@ -30,6 +30,13 @@
 	--nd-yellow: #f5ec58;
 	--nd-red: #ff3b52;
 
+	/* ── China: from images/china (Chongqing, Shanghai, Deni World signage). ── */
+	--nd-jade: #3ff0b8; /* jade-green neon signs; success alt, charts */
+	--nd-gold: #f6bd6a; /* lantern / hotpot-sign amber; warm highlight */
+	--nd-cinnabar: #b81f1a; /* 朱砂 seal-stamp red. Seals, paper accents. Not a neon: never glows */
+	--nd-fog-teal: #2f7c97; /* Buddha-street mist. Haze gradients only, ≤22% */
+	--nd-fog-rose: #7d3357; /* pagoda mist. Haze gradients only, ≤28% */
+
 	/* ── Street: warm grit from the streetwear plate. Illustration + extra chart series only. ── */
 	--nd-street-mustard: #efb22a;
 	--nd-street-coral: #ef6352;
@@ -59,11 +66,11 @@
 	--nd-series-1: var(--nd-magenta);
 	--nd-series-2: var(--nd-cyan);
 	--nd-series-3: var(--nd-yellow);
-	--nd-series-4: var(--nd-violet);
-	--nd-series-5: var(--nd-blue);
-	--nd-series-6: var(--nd-street-coral);
-	--nd-series-7: var(--nd-street-mustard);
-	--nd-series-8: var(--nd-pink);
+	--nd-series-4: var(--nd-jade);
+	--nd-series-5: var(--nd-violet);
+	--nd-series-6: var(--nd-gold);
+	--nd-series-7: var(--nd-blue);
+	--nd-series-8: var(--nd-street-coral);
 
 	/* ── Glow. Two-layer: tight core + soft halo. Apply via text-shadow or drop-shadow. ── */
 	--nd-glow-size: 1; /* multiply to tone down globally (0 = off) */
@@ -73,9 +80,9 @@
 		0 0 calc(16px * var(--nd-glow-size)) color-mix(in srgb, var(--nd-accent-2) 55%, transparent);
 
 	/* ── Typography ── */
-	--nd-font-display: 'Chakra Petch', 'Rajdhani', system-ui, sans-serif; /* headings, body */
-	--nd-font-ui: 'Rajdhani', 'Chakra Petch', system-ui, sans-serif; /* labels, buttons, nav */
-	--nd-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; /* data, meta */
+	--nd-font-display: 'Chakra Petch', 'Rajdhani', 'Noto Sans SC', system-ui, sans-serif; /* headings, body */
+	--nd-font-ui: 'Rajdhani', 'Chakra Petch', 'Noto Sans SC', system-ui, sans-serif; /* labels, buttons, nav */
+	--nd-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, 'Noto Sans SC', monospace; /* data, meta */
 	--nd-font-cjk: 'Noto Sans SC', 'PingFang SC', 'Source Han Sans SC', 'Microsoft YaHei', sans-serif; /* decorative hanzi (Simplified Chinese) */
 	--nd-font-cjk-tech: 'ZCOOL QingKe HuangYou', var(--nd-font-cjk); /* squared display hanzi; falls back to Noto for missing glyphs */
 	--nd-font-body: var(--nd-font-display);
@@ -153,6 +160,8 @@
 [data-nd-accent='yellow'] { --nd-accent: var(--nd-yellow); --nd-accent-2: var(--nd-cyan); }
 [data-nd-accent='red'] { --nd-accent: var(--nd-red); --nd-accent-2: var(--nd-cyan); }
 [data-nd-accent='violet'] { --nd-accent: var(--nd-violet); }
+[data-nd-accent='jade'] { --nd-accent: var(--nd-jade); --nd-accent-2: var(--nd-magenta); }
+[data-nd-accent='gold'] { --nd-accent: var(--nd-gold); --nd-accent-2: var(--nd-cyan); }
 [data-nd-accent] {
 	--nd-accent-tint: color-mix(in srgb, var(--nd-accent) 14%, transparent);
 	--nd-accent-2-tint: color-mix(in srgb, var(--nd-accent-2) 12%, transparent);
