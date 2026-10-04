@@ -85,10 +85,8 @@
 			<span class="scn nd-meta">/01</span>
 			<MoonScroll
 				text="霓虹都市"
-				label="Neon City — inscription over an LED moon, sealed Neon Deck"
+				label="Neon City — inscription over an LED moon"
 				caption="NI HONG DU SHI"
-				seal="霓虹甲板"
-				sealLabel="Neon Deck seal"
 				size="clamp(16rem, 30vw, 27rem)"
 			/>
 			<div class="coords nd-mono">
