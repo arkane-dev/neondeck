@@ -1,0 +1,150 @@
+/*
+ * NEONDECK effects + utilities. Opt-in classes; nothing here styles bare elements.
+ * Rule of thumb: one glowing thing per view region. Glow is a light source, not decoration.
+ */
+
+/* ── Typography helpers ── */
+.nd-label {
+	font-family: var(--nd-font-ui);
+	font-size: var(--nd-text-xs);
+	font-weight: 600;
+	letter-spacing: var(--nd-tracking-label);
+	text-transform: uppercase;
+	color: var(--nd-text-dim);
+}
+.nd-mono { font-family: var(--nd-font-mono); font-variant-numeric: tabular-nums; }
+.nd-meta { font-family: var(--nd-font-mono); font-size: var(--nd-text-xs); color: var(--nd-text-mute); }
+.nd-index { font-family: var(--nd-font-mono); color: var(--nd-accent); } /* "/01" */
+.nd-cursor::after { content: '_'; animation: nd-blink 1s steps(1) infinite; }
+
+/* ── Neon text ── */
+.nd-neon { color: var(--nd-accent); text-shadow: var(--nd-glow-accent); }
+.nd-neon-2 { color: var(--nd-accent-2); text-shadow: var(--nd-glow-accent-2); }
+.nd-flicker { animation: nd-flicker 6s infinite; } /* broken neon sign; use on ONE element max */
+
+/* ── Chamfer (cut corners). Works on any element; borders must come from a wrapper (see Panel). ── */
+.nd-cut {
+	--nd-cut: var(--nd-cut-md);
+	clip-path: polygon(var(--nd-cut) 0, 100% 0, 100% calc(100% - var(--nd-cut)), calc(100% - var(--nd-cut)) 100%, 0 100%, 0 var(--nd-cut));
+}
+.nd-cut-tr { /* one cut corner, top-right: tabs, buttons */
+	--nd-cut: var(--nd-cut-sm);
+	clip-path: polygon(0 0, calc(100% - var(--nd-cut)) 0, 100% var(--nd-cut), 100% 100%, 0 100%);
+}
+.nd-cut-br {
+	--nd-cut: var(--nd-cut-sm);
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--nd-cut)), calc(100% - var(--nd-cut)) 100%, 0 100%);
+}
+
+/* ── Corner brackets ┌ ┐ └ ┘ (HUD framing without a full border) ── */
+.nd-brackets {
+	--nd-bracket: 10px;
+	--nd-bracket-color: var(--nd-text-mute);
+	position: relative;
+	background:
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) top left / var(--nd-bracket) 1px,
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) top left / 1px var(--nd-bracket),
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) top right / var(--nd-bracket) 1px,
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) top right / 1px var(--nd-bracket),
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) bottom left / var(--nd-bracket) 1px,
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) bottom left / 1px var(--nd-bracket),
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) bottom right / var(--nd-bracket) 1px,
+		linear-gradient(var(--nd-bracket-color), var(--nd-bracket-color)) bottom right / 1px var(--nd-bracket);
+	background-repeat: no-repeat;
+}
+
+/* ── Backgrounds ── */
+.nd-grid-bg { /* blueprint grid, Cyber Brutalism page */
+	background-image:
+		linear-gradient(var(--nd-line) 1px, transparent 1px),
+		linear-gradient(90deg, var(--nd-line) 1px, transparent 1px);
+	background-size: 48px 48px;
+	background-position: -1px -1px;
+}
+.nd-dot-bg {
+	background-image: radial-gradient(var(--nd-line-strong) 1px, transparent 1.5px);
+	background-size: 16px 16px;
+}
+.nd-carbon-bg { /* fine carbon-fibre weave, phone widget plate */
+	background-color: var(--nd-void);
+	background-image:
+		linear-gradient(45deg, #ffffff06 25%, transparent 25%, transparent 75%, #ffffff06 75%),
+		linear-gradient(45deg, #ffffff06 25%, transparent 25%, transparent 75%, #ffffff06 75%);
+	background-size: 6px 6px;
+	background-position: 0 0, 3px 3px;
+}
+.nd-hazard { /* caution tape */
+	background: repeating-linear-gradient(-45deg, var(--nd-accent) 0 14px, transparent 14px 28px);
+}
+.nd-hatch { /* thin diagonal hatch for empty/disabled zones */
+	background: repeating-linear-gradient(-45deg, var(--nd-line) 0 1px, transparent 1px 7px);
+}
+
+/* Scanlines: add to a full-screen fixed overlay, or a single hero image. */
+.nd-scanlines { position: relative; }
+.nd-scanlines::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: repeating-linear-gradient(to bottom, #00000000 0 2px, #00000038 2px 3px);
+	mix-blend-mode: multiply;
+	z-index: var(--nd-z-fx);
+}
+
+/* Paper surface: poster editorial blocks. Ink on cream with a red sun. */
+.nd-paper {
+	--nd-text: var(--nd-ink);
+	--nd-text-dim: #3a3632;
+	--nd-text-mute: #6d6658;
+	--nd-line: #b9ae8c;
+	--nd-accent: var(--nd-sun);
+	background-color: var(--nd-paper);
+	color: var(--nd-ink);
+	background-image: radial-gradient(#0000000d 1px, transparent 1px);
+	background-size: 4px 4px;
+}
+
+/* ── Glitch (RGB split). Text must be duplicated in data-text. ── */
+.nd-glitch { position: relative; display: inline-block; }
+.nd-glitch::before,
+.nd-glitch::after {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0;
+}
+.nd-glitch::before { color: var(--nd-cyan); transform: translate(-2px, 0); mix-blend-mode: screen; }
+.nd-glitch::after { color: var(--nd-magenta); transform: translate(2px, 0); mix-blend-mode: screen; }
+.nd-glitch:hover::before,
+.nd-glitch[data-active='true']::before { opacity: 0.85; animation: nd-glitch-a 1.6s var(--nd-ease-snap) infinite; }
+.nd-glitch:hover::after,
+.nd-glitch[data-active='true']::after { opacity: 0.85; animation: nd-glitch-b 1.6s var(--nd-ease-snap) infinite; }
+
+/* ── Keyframes ── */
+@keyframes nd-blink { 50% { opacity: 0; } }
+@keyframes nd-flicker {
+	0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+	20%, 24%, 55% { opacity: 0.35; }
+}
+@keyframes nd-glitch-a {
+	0% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 0); }
+	25% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 0); }
+	50% { clip-path: inset(30% 0 40% 0); transform: translate(-1px, 0); }
+	75% { clip-path: inset(80% 0 2% 0); transform: translate(3px, 0); }
+	100% { clip-path: inset(0 0 90% 0); transform: translate(-2px, 0); }
+}
+@keyframes nd-glitch-b {
+	0% { clip-path: inset(70% 0 5% 0); transform: translate(3px, 0); }
+	25% { clip-path: inset(5% 0 75% 0); transform: translate(-2px, 0); }
+	50% { clip-path: inset(45% 0 30% 0); transform: translate(2px, 0); }
+	75% { clip-path: inset(15% 0 60% 0); transform: translate(-3px, 0); }
+	100% { clip-path: inset(85% 0 0 0); transform: translate(1px, 0); }
+}
+@keyframes nd-sweep { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+	.nd-flicker, .nd-cursor::after { animation: none; }
+	.nd-glitch::before, .nd-glitch::after { animation: none !important; opacity: 0 !important; }
+}

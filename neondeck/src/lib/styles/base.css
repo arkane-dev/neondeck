@@ -1,0 +1,106 @@
+/* NEONDECK base: reset + element defaults. Import once at the app root. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	background: var(--nd-void);
+	-webkit-text-size-adjust: 100%;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	margin: 0;
+	min-height: 100dvh;
+	background:
+		radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--nd-violet) 14%, transparent), transparent 70%),
+		radial-gradient(ellipse 60% 40% at 100% 110%, color-mix(in srgb, var(--nd-magenta) 8%, transparent), transparent 70%),
+		var(--nd-bg);
+	background-attachment: fixed;
+	color: var(--nd-text);
+	font-family: var(--nd-font-body);
+	font-size: var(--nd-text-md);
+	line-height: var(--nd-leading-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 var(--nd-space-3);
+	font-family: var(--nd-font-display);
+	font-weight: 700;
+	line-height: var(--nd-leading-tight);
+	letter-spacing: var(--nd-tracking-display);
+	text-transform: uppercase;
+	text-wrap: balance;
+}
+h1 { font-size: var(--nd-text-4xl); }
+h2 { font-size: var(--nd-text-2xl); }
+h3 { font-size: var(--nd-text-xl); }
+h4 { font-size: var(--nd-text-lg); }
+h5, h6 { font-size: var(--nd-text-md); }
+
+p { margin: 0 0 var(--nd-space-4); max-width: 68ch; text-wrap: pretty; }
+
+a {
+	color: var(--nd-accent-2);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+	transition: color var(--nd-dur-fast) var(--nd-ease), text-shadow var(--nd-dur-fast) var(--nd-ease);
+}
+a:hover { color: var(--nd-text); text-shadow: var(--nd-glow-accent-2); }
+
+code, kbd, samp, pre { font-family: var(--nd-font-mono); font-size: 0.92em; }
+:not(pre) > code {
+	padding: 0.1em 0.35em;
+	background: var(--nd-surface-2);
+	color: var(--nd-accent-2);
+}
+pre {
+	margin: 0 0 var(--nd-space-4);
+	padding: var(--nd-space-4);
+	overflow-x: auto;
+	background: var(--nd-void);
+	border-left: 2px solid var(--nd-accent);
+	color: var(--nd-text-dim);
+	line-height: 1.6;
+}
+
+hr { border: 0; border-top: 1px solid var(--nd-line); margin: var(--nd-space-8) 0; }
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+
+::selection { background: var(--nd-accent); color: var(--nd-text-on-neon); }
+
+:focus-visible {
+	outline: 2px solid var(--nd-focus);
+	outline-offset: 2px;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* Scrollbars: thin, square, neon thumb on hover. */
+* { scrollbar-width: thin; scrollbar-color: var(--nd-line-strong) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--nd-line-strong); }
+*::-webkit-scrollbar-thumb:hover { background: var(--nd-accent); }
+
+/* Tables: dense, mono numbers, hairline rows. Add class="nd-table". */
+.nd-table { width: 100%; border-collapse: collapse; font-size: var(--nd-text-sm); }
+.nd-table th {
+	padding: var(--nd-space-2) var(--nd-space-3);
+	border-bottom: 1px solid var(--nd-line-strong);
+	color: var(--nd-text-mute);
+	font-family: var(--nd-font-ui);
+	font-weight: 600;
+	letter-spacing: var(--nd-tracking-label);
+	text-align: left;
+	text-transform: uppercase;
+	font-size: var(--nd-text-xs);
+}
+.nd-table td { padding: var(--nd-space-2) var(--nd-space-3); border-bottom: 1px solid var(--nd-line); }
+.nd-table td.num, .nd-table th.num { font-family: var(--nd-font-mono); text-align: right; font-variant-numeric: tabular-nums; }
+.nd-table tbody tr:hover { background: var(--nd-accent-tint); }

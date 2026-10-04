@@ -1,0 +1,170 @@
+/*
+ * NEONDECK design tokens.
+ * Every color, size and motion value lives here. Components never hard-code values.
+ * Colors were sampled from images/colors/ (see DESIGN_LANGUAGE.md for sources).
+ */
+:root {
+	color-scheme: dark;
+
+	/* ── Base: night sky → wet asphalt. Blue-black, never pure #000 or grey. ── */
+	--nd-void: #03040c; /* page edge, behind everything */
+	--nd-bg: #070818; /* app background */
+	--nd-surface-1: #0c0f26; /* panels */
+	--nd-surface-2: #12163a; /* raised: hover, inputs, nested panels */
+	--nd-surface-3: #1b1f4a; /* highest: menus, popovers, selected rows */
+	--nd-line: #262a5c; /* hairlines, grid, dim borders */
+	--nd-line-strong: #43479a; /* default panel border */
+
+	/* ── Text ── */
+	--nd-text: #ecebff; /* primary copy (cool white, never #fff) */
+	--nd-text-dim: #a49fd9; /* secondary copy, labels (lavender skin-tone) */
+	--nd-text-mute: #6c68a8; /* meta, disabled, placeholder */
+	--nd-text-on-neon: #070818; /* text on filled neon surfaces */
+
+	/* ── Neon: the light sources. Used sparingly, at full strength. ── */
+	--nd-magenta: #ff2bd6;
+	--nd-pink: #ff5fb4;
+	--nd-cyan: #22f2f7;
+	--nd-blue: #3f5bff;
+	--nd-violet: #a66bff;
+	--nd-yellow: #f5ec58;
+	--nd-red: #ff3b52;
+
+	/* ── Street: warm grit from the streetwear plate. Illustration + extra chart series only. ── */
+	--nd-street-mustard: #efb22a;
+	--nd-street-coral: #ef6352;
+	--nd-street-teal: #0b5566;
+	--nd-street-khaki: #a0966d;
+
+	/* ── Paper: the poster plate. Editorial blocks only (hero, about, print). ── */
+	--nd-paper: #ece4cf;
+	--nd-paper-dim: #d5caa1;
+	--nd-ink: #121214;
+	--nd-sun: #e8202f;
+
+	/* ── Semantic roles. Components use these, not raw neon names. ── */
+	--nd-accent: var(--nd-magenta); /* brand, primary action, focus */
+	--nd-accent-2: var(--nd-cyan); /* secondary highlight, links, "online" */
+	--nd-success: var(--nd-cyan);
+	--nd-info: var(--nd-blue);
+	--nd-warning: var(--nd-yellow);
+	--nd-danger: var(--nd-red);
+	--nd-focus: var(--nd-cyan);
+
+	/* Translucent tints of the accent for fills behind neon text */
+	--nd-accent-tint: color-mix(in srgb, var(--nd-accent) 14%, transparent);
+	--nd-accent-2-tint: color-mix(in srgb, var(--nd-accent-2) 12%, transparent);
+
+	/* Chart series order (categorical). Neon first, street second. */
+	--nd-series-1: var(--nd-magenta);
+	--nd-series-2: var(--nd-cyan);
+	--nd-series-3: var(--nd-yellow);
+	--nd-series-4: var(--nd-violet);
+	--nd-series-5: var(--nd-blue);
+	--nd-series-6: var(--nd-street-coral);
+	--nd-series-7: var(--nd-street-mustard);
+	--nd-series-8: var(--nd-pink);
+
+	/* ── Glow. Two-layer: tight core + soft halo. Apply via text-shadow or drop-shadow. ── */
+	--nd-glow-size: 1; /* multiply to tone down globally (0 = off) */
+	--nd-glow-accent: 0 0 calc(4px * var(--nd-glow-size)) var(--nd-accent),
+		0 0 calc(16px * var(--nd-glow-size)) color-mix(in srgb, var(--nd-accent) 55%, transparent);
+	--nd-glow-accent-2: 0 0 calc(4px * var(--nd-glow-size)) var(--nd-accent-2),
+		0 0 calc(16px * var(--nd-glow-size)) color-mix(in srgb, var(--nd-accent-2) 55%, transparent);
+
+	/* ── Typography ── */
+	--nd-font-display: 'Chakra Petch', 'Rajdhani', system-ui, sans-serif; /* headings, body */
+	--nd-font-ui: 'Rajdhani', 'Chakra Petch', system-ui, sans-serif; /* labels, buttons, nav */
+	--nd-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace; /* data, meta */
+	--nd-font-cjk: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; /* decorative kanji */
+	--nd-font-body: var(--nd-font-display);
+
+	/* Type scale (1.25 ratio, rounded). rem so user zoom works. */
+	--nd-text-2xs: 0.6875rem; /* 11 — micro labels under buttons */
+	--nd-text-xs: 0.75rem; /* 12 — meta, mono readouts */
+	--nd-text-sm: 0.8125rem; /* 13 — dense UI */
+	--nd-text-md: 0.9375rem; /* 15 — body */
+	--nd-text-lg: 1.125rem; /* 18 */
+	--nd-text-xl: 1.375rem; /* 22 — panel titles */
+	--nd-text-2xl: 1.75rem; /* 28 — section titles */
+	--nd-text-3xl: 2.25rem; /* 36 */
+	--nd-text-4xl: 3rem; /* 48 — page titles */
+	--nd-text-5xl: 4rem; /* 64 */
+	--nd-text-hero: clamp(3rem, 9vw, 7rem); /* hero only */
+
+	--nd-leading-tight: 1.05;
+	--nd-leading-snug: 1.25;
+	--nd-leading-body: 1.55;
+
+	--nd-tracking-label: 0.14em; /* uppercase labels */
+	--nd-tracking-display: 0.01em;
+
+	/* ── Space: 4px grid ── */
+	--nd-space-0: 0;
+	--nd-space-1: 0.25rem;
+	--nd-space-2: 0.5rem;
+	--nd-space-3: 0.75rem;
+	--nd-space-4: 1rem;
+	--nd-space-5: 1.25rem;
+	--nd-space-6: 1.5rem;
+	--nd-space-8: 2rem;
+	--nd-space-10: 2.5rem;
+	--nd-space-12: 3rem;
+	--nd-space-16: 4rem;
+	--nd-space-24: 6rem;
+
+	/* ── Shape: no rounded corners. Corners are CUT (chamfered). ── */
+	--nd-radius: 0;
+	--nd-cut-xs: 4px;
+	--nd-cut-sm: 8px;
+	--nd-cut-md: 14px;
+	--nd-cut-lg: 22px;
+	--nd-border-w: 1px;
+
+	/* ── Layout ── */
+	--nd-topbar-h: 3.5rem;
+	--nd-statusbar-h: 1.75rem;
+	--nd-rail-w: 3rem;
+	--nd-sidebar-w: 15rem;
+	--nd-content-max: 80rem;
+	--nd-gutter: clamp(1rem, 3vw, 2.5rem);
+
+	/* ── Motion: fast and mechanical. Never bouncy. ── */
+	--nd-dur-instant: 80ms;
+	--nd-dur-fast: 140ms;
+	--nd-dur-base: 220ms;
+	--nd-dur-slow: 420ms;
+	--nd-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--nd-ease-snap: steps(4, end);
+
+	/* ── Layers ── */
+	--nd-z-base: 0;
+	--nd-z-raised: 10;
+	--nd-z-sticky: 100;
+	--nd-z-overlay: 1000;
+	--nd-z-toast: 1100;
+	--nd-z-fx: 2000; /* scanline overlay, pointer-events: none */
+}
+
+/* Accent swaps. Put on any container: <section data-nd-accent="cyan">. */
+[data-nd-accent='magenta'] { --nd-accent: var(--nd-magenta); }
+[data-nd-accent='cyan'] { --nd-accent: var(--nd-cyan); --nd-accent-2: var(--nd-magenta); }
+[data-nd-accent='yellow'] { --nd-accent: var(--nd-yellow); --nd-accent-2: var(--nd-cyan); }
+[data-nd-accent='red'] { --nd-accent: var(--nd-red); --nd-accent-2: var(--nd-cyan); }
+[data-nd-accent='violet'] { --nd-accent: var(--nd-violet); }
+[data-nd-accent] {
+	--nd-accent-tint: color-mix(in srgb, var(--nd-accent) 14%, transparent);
+	--nd-accent-2-tint: color-mix(in srgb, var(--nd-accent-2) 12%, transparent);
+	--nd-glow-accent: 0 0 calc(4px * var(--nd-glow-size)) var(--nd-accent),
+		0 0 calc(16px * var(--nd-glow-size)) color-mix(in srgb, var(--nd-accent) 55%, transparent);
+	--nd-glow-accent-2: 0 0 calc(4px * var(--nd-glow-size)) var(--nd-accent-2),
+		0 0 calc(16px * var(--nd-glow-size)) color-mix(in srgb, var(--nd-accent-2) 55%, transparent);
+}
+
+/* Users who ask for less motion also get less glow bloom. */
+@media (prefers-reduced-motion: reduce) {
+	:root { --nd-dur-fast: 0ms; --nd-dur-base: 0ms; --nd-dur-slow: 0ms; }
+}
+@media (prefers-contrast: more) {
+	:root { --nd-glow-size: 0; --nd-line: #4a4f9c; --nd-text-dim: #c9c5f2; --nd-text-mute: #9a96d0; }
+}
