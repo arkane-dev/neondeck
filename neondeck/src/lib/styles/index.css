@@ -1,4 +1,4 @@
-/* One import for everything: import 'neondeck/styles.css' */
+/* One import for everything: import '@cyberpunk-apps/neondeck/styles.css' */
 @import './fonts.css';
 @import './tokens.css';
 @import './base.css';

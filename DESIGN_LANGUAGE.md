@@ -192,13 +192,16 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 ## 11. Using it
 ```bash
 # in a new SvelteKit or Wails frontend
-npm i ../sharable_assets/neondeck        # or file: dep / workspace
+# new projects: templates/new-project.sh does this for you
+# .npmrc has install-links=true, so npm copies the package in (no symlink, no duplicate Svelte)
+npm i ../sharable_assets/neondeck        # package name: @cyberpunk-apps/neondeck (private, never on npm)
+# after changing neondeck: rebuild it, then in the project run `npm run update:neondeck`
 ```
 ```svelte
 <!-- +layout.svelte (SvelteKit) or App.svelte (Wails) -->
 <script>
-  import 'neondeck/styles.css';
-  import { AppShell, Panel, Button } from 'neondeck';
+  import '@cyberpunk-apps/neondeck/styles.css';
+  import { AppShell, Panel, Button } from '@cyberpunk-apps/neondeck';
 </script>
 ```
 Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, SysClock`. `SectionHeader` takes `zh` for a bilingual title. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.

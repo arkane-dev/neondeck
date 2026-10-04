@@ -1,5 +1,5 @@
 // NEONDECK — shared cyberpunk design system.
-// Styles: import 'neondeck/styles.css' once at the app root (+layout.svelte or main.ts).
+// Styles: import '@cyberpunk-apps/neondeck/styles.css' once at the app root (+layout.svelte or main.ts).
 export { default as AppShell } from './components/AppShell.svelte';
 export { default as Panel } from './components/Panel.svelte';
 export { default as Button } from './components/Button.svelte';

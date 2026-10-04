@@ -1,5 +1,6 @@
 {
-	"name": "neondeck",
+	"name": "@cyberpunk-apps/neondeck",
+	"private": true,
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
