@@ -134,6 +134,8 @@ Fonts ship via fontsource (self-hosted, so they work offline in Wails). The hero
 - AppShell with sidebar. Content is a **dashboard grid** of Panels (`repeat(3, 1fr)`, 20px gaps, `span-2` for wide panels).
 - Every Panel has an index + title + mono meta in its header. Numbers go in `Readout`s, and any 0–100 value is a segmented `Meter`.
 - Primary action list = stacked block `Button`s with `sub` micro-captions (the cyberdeck menu).
+- Forms: `Input`, `Textarea`, `Select`, `Checkbox` and `FileDrop` share the cut-corner frame and the uppercase Rajdhani label. Checkboxes are square. A checked box shows a solid accent square inside.
+- Overlays: one `Dialog` at a time. Side panels (history, details) use `placement="right"`. Feedback goes to toasts, not `alert()`.
 - Tables use `.nd-table`: mono right-aligned numbers, hairline rows, accent-tint hover, status as `Tag`s.
 - Wails window background must match `--nd-bg`: `BackgroundColour: &options.RGBA{R: 7, G: 8, B: 24, A: 255}` (`wailsBackground` in tokens). Use a frameless window with our own top bar where practical.
 
@@ -204,6 +206,6 @@ npm i ../sharable_assets/neondeck        # package name: @cyberpunk-apps/neondec
   import { AppShell, Panel, Button } from '@cyberpunk-apps/neondeck';
 </script>
 ```
-Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, SysClock`. `SectionHeader` takes `zh` for a bilingual title. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
+Components: `AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input, Textarea, Select, Checkbox, FileDrop, Tabs, Dialog, Toaster, HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, SysClock`. `SectionHeader` takes `zh` for a bilingual title. `Dialog` is a modal on the native `<dialog>`; `placement="right"` makes it a side drawer. For toasts, put `<Toaster />` in the root layout and call `toast.create({ title, description, type })`. Utility classes: `.nd-label .nd-mono .nd-meta .nd-index .nd-cursor .nd-neon .nd-neon-2 .nd-flicker .nd-cut .nd-cut-tr .nd-cut-br .nd-brackets .nd-grid-bg .nd-dot-bg .nd-carbon-bg .nd-hazard .nd-hatch .nd-scanlines .nd-fog .nd-led-bg .nd-paper .nd-glitch .nd-table`. JS/Go values: `neondeck/tokens.json`.
 
 New components must use only `--nd-*` tokens and follow §5. Then add them to the showcase page (`neondeck/src/routes/+page.svelte`).

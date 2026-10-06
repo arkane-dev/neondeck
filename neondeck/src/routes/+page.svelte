@@ -2,10 +2,18 @@
 <script lang="ts">
 	import {
 		AppShell, Panel, Button, SectionHeader, Readout, Meter, Tag, Input,
-		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, color
+		HazardStripe, GlitchText, Barcode, Ruler, HanziMark, NeonSign, DotMatrix, Seal, MoonScroll, color,
+		Dialog, Toaster, Tabs, Textarea, Select, Checkbox, FileDrop, toast
 	} from '../lib/index.js';
 
 	let handle = $state('');
+	let brief = $state('');
+	let region = $state('szx');
+	let encrypt = $state(true);
+	let tab = $state('form');
+	let dialogOpen = $state(false);
+	let drawerOpen = $state(false);
+	let dropped = $state('');
 	const swatches: [string, string, string][] = [
 		['void', color.void, 'page edge'],
 		['bg', color.bg, 'app background'],
@@ -221,8 +229,46 @@
 						</div>
 					</div>
 				</Panel>
+
+				<Panel title="Forms + overlays" index="10" meta="dialog · toast · tabs" class="span-3">
+					<Tabs label="Form demo" items={[{ value: 'form', label: 'Form' }, { value: 'overlay', label: 'Overlays' }]} bind:value={tab}>
+						{#snippet children(v)}
+							{#if v === 'form'}
+								<div class="form-demo">
+									<Textarea label="Brief" placeholder="Describe the job in plain words." bind:value={brief} hint="{brief.length} chars" />
+									<div class="form-col">
+										<Select label="Region" bind:value={region} options={[{ value: 'szx', label: 'SZX // Shenzhen' }, { value: 'sha', label: 'SHA // Shanghai' }, { value: 'ckg', label: 'CKG // Chongqing' }]} />
+										<Checkbox label="Encrypt payload" hint="AES-256, keys stay local" bind:checked={encrypt} />
+										<FileDrop label="Drop a manifest or browse" hint=".json · .txt" accept=".json,.txt" onfiles={(f) => (dropped = f.map((x) => x.name).join(', '))} />
+										{#if dropped}<p class="nd-meta">&gt; loaded: {dropped}</p>{/if}
+									</div>
+								</div>
+							{:else}
+								<div class="row">
+									<Button variant="outline" onclick={() => (dialogOpen = true)}>Open dialog</Button>
+									<Button variant="outline" onclick={() => (drawerOpen = true)}>Open drawer</Button>
+									<Button variant="ghost" onclick={() => toast.create({ title: 'Uplink stable', description: 'longmen-01 answered in 12ms.', type: 'success' })}>Toast: ok</Button>
+									<Button variant="ghost" onclick={() => toast.create({ title: 'Breach detected', description: 'Node sha-04 refused the handshake.', type: 'error' })}>Toast: error</Button>
+								</div>
+							{/if}
+						{/snippet}
+					</Tabs>
+				</Panel>
 			</div>
 		</section>
+
+		<Dialog bind:open={dialogOpen} title="Confirm jack-in" index="01" meta="SZX">
+			<p>Connect to longmen-01? The session is logged.</p>
+			{#snippet footer()}
+				<Button variant="ghost" onclick={() => (dialogOpen = false)}>Cancel</Button>
+				<Button onclick={() => (dialogOpen = false)}>Connect</Button>
+			{/snippet}
+		</Dialog>
+		<Dialog bind:open={drawerOpen} title="History" placement="right" size="sm" meta="12 entries">
+			<p class="nd-meta">&gt; 12:04 // renamed node</p>
+			<p class="nd-meta">&gt; 11:58 // generated section</p>
+		</Dialog>
+		<Toaster />
 
 		<!-- /04 EDITORIAL: poster plate -->
 		<section id="editorial">
@@ -288,6 +334,7 @@
 
 	.dash { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--nd-space-5); }
 	.dash :global(.span-2) { grid-column: span 2; }
+	.dash :global(.span-3) { grid-column: 1 / -1; }
 	.readouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--nd-space-6); margin-bottom: var(--nd-space-6); }
 	.meters { display: grid; gap: var(--nd-space-4); }
 	.menu { display: grid; gap: var(--nd-space-2); }
@@ -321,4 +368,7 @@
 		.poster-seal :global(.nd-seal) { --size: 4.5rem !important; }
 		.poster-title { font-size: var(--nd-text-4xl); }
 	}
+	.form-demo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--nd-space-5); }
+	.form-col { display: flex; flex-direction: column; gap: var(--nd-space-4); }
+	@media (max-width: 720px) { .form-demo { grid-template-columns: 1fr; } }
 </style>

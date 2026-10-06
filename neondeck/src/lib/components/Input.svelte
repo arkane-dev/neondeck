@@ -3,7 +3,7 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	interface Props extends Omit<HTMLInputAttributes, 'value'> {
 		label?: string;
-		value?: string;
+		value?: string | number | null;
 		hint?: string;
 		error?: string;
 		prompt?: string;
