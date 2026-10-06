@@ -1,6 +1,15 @@
-# sharable_assets
+# NEONDECK
 
-Shared design assets for every project in `cyberpunk_apps/`.
+A cyberpunk design system for Svelte 5: tokens, components and a design language, with a palette checked against WCAG 2.2 AA.
+Every app and site in [arkane-dev](https://github.com/arkane-dev) is built with it.
+
+![The NEONDECK showcase](reference/showcase-desktop.png)
+
+Projects expect this repo in a folder named `sharable_assets`, beside them:
+```bash
+git clone https://github.com/arkane-dev/neondeck sharable_assets
+```
+The npm package (`@cyberpunk-apps/neondeck`) is private and installs from that folder. It is never on the npm registry.
 
 - `DESIGN_LANGUAGE.md`: the NEONDECK design language. Read this first.
 - `neondeck/`: Svelte 5 library with the tokens, base CSS, effects and components. Its `src/routes/+page.svelte` is the living showcase.
