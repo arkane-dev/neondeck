@@ -92,8 +92,9 @@
 	.xl { max-width: min(92vw, 72rem); }
 	.right {
 		margin: 0 0 0 auto;
+		height: 100vh;
 		height: 100dvh;
-		max-height: 100dvh;
+		max-height: none;
 	}
 	.nd-dialog::backdrop { background: color-mix(in srgb, var(--nd-void) 80%, transparent); }
 	.nd-dialog[open] { animation: nd-dlg-in var(--nd-dur-base) var(--nd-ease); }
@@ -112,9 +113,10 @@
 	.inner {
 		clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
 	}
+	/* Size to content. No percentage heights: WebKit (WebKitGTK, Safari) resolves 100% of a
+	   fit-content <dialog> to 0, and the clip-path then hides everything. Only the drawer,
+	   which has a definite height, fills it. */
 	.frame {
-		height: 100%;
-		max-height: inherit;
 		padding: var(--nd-border-w);
 		background: var(--edge);
 	}
@@ -122,11 +124,12 @@
 		--c: calc(var(--nd-cut-md) - 0.4px);
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		max-height: calc(88vh - 2px);
 		max-height: calc(88dvh - 2px);
 		background: var(--nd-surface-1);
 	}
-	.right .inner { max-height: calc(100dvh - 2px); }
+	.right .frame { height: 100%; }
+	.right .inner { height: 100%; max-height: none; }
 
 	header {
 		position: relative;
@@ -166,7 +169,7 @@
 	}
 	.x:hover { background: var(--nd-surface-2); color: var(--nd-text); }
 	.body {
-		flex: 1;
+		flex: 1 1 auto;
 		min-height: 0;
 		padding: var(--nd-space-4) var(--nd-space-5) var(--nd-space-5);
 		overflow-y: auto;

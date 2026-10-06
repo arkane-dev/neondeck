@@ -156,6 +156,7 @@ The palette is tuned to pass **WCAG 2.2 AA**. These are the checks axe, Lighthou
 **How it's enforced**
 - `npm run contrast` (in `neondeck/`) checks 107 token pairs and exits 1 on any failure. Run it after touching a color.
 - axe-core on the rendered showcase shows 0 violations at 1440px and 400px. 2026-10-04: 1 real bug found and fixed (button captions).
+- Wails apps render in **WebKitGTK**, not Chromium. Check overlays and new layouts there too: `neondeck/scripts/wkgtk-snap.py`. 2026-10-06: `Dialog` collapsed to 2px in WebKit (a `height: 100%` inside a fit-content `<dialog>`) and looked fine in Chromium. Don't use percentage heights inside content-sized boxes.
 
 **Measured on `--nd-bg`**
 | Color | Ratio |
