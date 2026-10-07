@@ -26,3 +26,7 @@ npm run dev        # showcase at http://localhost:5173
 npm run build      # builds dist/ (tokens.json regenerated, publint checked)
 npm run check      # svelte-check
 ```
+
+## License
+
+[MIT](LICENSE) © 2026 Andrew R. Kane
