@@ -1,0 +1,53 @@
+# Check NEONDECK on every push and pull request: types, the library build, and the
+# WCAG contrast check. On a push to main that passes, redeploy andrewrkane.com, which
+# (with the GenAI Calculator) is built from this design system.
+#
+# The redeploy needs the SITE_DEPLOY_TOKEN secret: a fine-grained token for
+# arkane-dev/andrewrkane.com with "Actions: Read and write". Without it, that step skips.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: neondeck
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Type check
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+      - name: Contrast (WCAG 2.2 AA)
+        run: npm run contrast
+
+  redeploy-site:
+    needs: check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the andrewrkane.com deploy
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::SITE_DEPLOY_TOKEN is not set, so the site was not redeployed."
+            exit 0
+          fi
+          gh workflow run deploy.yml -R arkane-dev/andrewrkane.com --ref main
+          echo "Site deploy triggered."
